@@ -21,7 +21,8 @@ namespace BrainfuckPlus
             if (debugMode) allowedCharSet += DEBUG_CHARS;
             Console.WriteLine(allowedCharSet);
 
-
+            code = RemoveCommentsAndNewLines(code);
+            code = RemoveInvalidChars(code, allowedCharSet);
         }
 
         public static string GetAvailableMethodNames(string? address)
