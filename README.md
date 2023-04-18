@@ -6,6 +6,8 @@ Brainfuck plus aims to keep the same mind hurting style as brainfuck as translat
 
 You can write code in brainfuck plus, then export it as regular brainfuck
 
+I also plan to maybe make a brainfuck plus plus in the future, which deviates more from brainfuck, so wont easily transpile to brainfuck. A planned feature for brainfuck plus plus is functions which can have their own memory, separate to the memory of the program
+
 ## Features
 
 ### Transpiles to brainfuck
