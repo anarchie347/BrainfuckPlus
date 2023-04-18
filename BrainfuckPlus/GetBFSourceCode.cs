@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BrainfuckPlus
@@ -14,11 +15,13 @@ namespace BrainfuckPlus
         public const char COMMENT_CHAR = '/';
         public static void GetCode(string? address, bool debugMode)
         {
-            string RawText = (address == null ? InputCode.Input() : File.ReadAllText(address));
+            string code = (address == null ? InputCode.Input() : File.ReadAllText(address));
             string allowedCharSet = BF_VALID_CHARS;
             if (address != null) allowedCharSet += GetAvailableMethodNames(address);
             if (debugMode) allowedCharSet += DEBUG_CHARS;
             Console.WriteLine(allowedCharSet);
+
+
         }
 
         public static string GetAvailableMethodNames(string? address)
@@ -55,7 +58,15 @@ namespace BrainfuckPlus
         }
 
         
-        
+        public static string RemoveInvalidChars(string code, string allowedCharSet)
+        {
+            string newCode = "";
+            for (int i = 0; i < code.Length; i++)
+            {
+                if (allowedCharSet.Contains(code[i])) newCode += code[i];
+            }
+            return newCode;
+        }
     }
 
 }
