@@ -9,17 +9,23 @@ namespace BrainfuckPlus
 {
     internal static class GetBFSourceCode
     {
-        public static void GetCode(string? address)
+        public const string BF_VALID_CHARS = "[],.+-<>";
+        public const string DEBUG_CHARS = @"\:*?""|"; //chars that are not allowed in Windows fle names -> cant be methods (on windows). doesnt include /,<,>, these are used for other purposes
+        public const char COMMENT_CHAR = '/';
+        public static void GetCode(string? address, bool debugMode)
         {
             string RawText = (address == null ? InputCode.Input() : File.ReadAllText(address));
-            string allowedCharSet = "+-,.<>[]";
-            allowedCharSet += (address == null ? "" : GetAvailableMethodNames(address));
+            string allowedCharSet = BF_VALID_CHARS;
+            if (address != null) allowedCharSet += GetAvailableMethodNames(address);
+            if (debugMode) allowedCharSet += DEBUG_CHARS;
             Console.WriteLine(allowedCharSet);
         }
 
-        public static string GetAvailableMethodNames(string address)
+        public static string GetAvailableMethodNames(string? address)
         {
-            address = address.Substring(0, address.LastIndexOf('\\'));
+            address = Path.GetDirectoryName(address);
+            if (address == null)
+                return "";
             string[] fileNames;
             fileNames = Directory.GetFiles(address);
             fileNames = fileNames.Where(name => name.EndsWith(".bfp")).ToArray();
@@ -34,7 +40,19 @@ namespace BrainfuckPlus
             return fileFirstChars;
         }
 
+        public static string RemoveComments(string code)
+        {
+            System.IO.StringReader sr = new(code);
+            do
+            {
 
+            } while (!sr.)
+        }
+
+        public static string RemoveInvalidChars(string code)
+        {
+
+        }
         
     }
 
