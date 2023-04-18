@@ -40,19 +40,21 @@ namespace BrainfuckPlus
             return fileFirstChars;
         }
 
-        public static string RemoveComments(string code)
+        public static string RemoveCommentsAndNewLines(string code)
         {
-            System.IO.StringReader sr = new(code);
-            do
+            string[] lines = code.Split(Environment.NewLine);
+            string resultingCode = "";
+            int index;
+            for (int i = 0; i < lines.Length; i++)
             {
-
-            } while (!sr.)
+                lines[i] = lines[i].Trim();
+                index = lines[i].IndexOf(COMMENT_CHAR);
+                resultingCode += (index == -1 ? lines[i] : lines[i][..index]);
+            }
+            return resultingCode;
         }
 
-        public static string RemoveInvalidChars(string code)
-        {
-
-        }
+        
         
     }
 
