@@ -17,7 +17,7 @@
             */
 
             string? fileAddress = GetFileAddress();
-            GetBFSourceCode.GetCode(fileAddress, true);
+            GetSourceCode.GetCode(fileAddress, true);
         }
 
         static string? GetFileAddress()

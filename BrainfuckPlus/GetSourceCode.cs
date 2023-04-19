@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BrainfuckPlus
 {
-    internal static class GetBFSourceCode
+    internal static class GetSourceCode
     {
         public const string BF_VALID_CHARS = "[],.+-<>";
         public const string DEBUG_CHARS = @"\:*?""|"; //chars that are not allowed in Windows fle names -> cant be methods (on windows). doesnt include /,<,>, these are used for other purposes
@@ -17,6 +17,8 @@ namespace BrainfuckPlus
         {
             string code = (address == null ? InputCode.Input() : File.ReadAllText(address));
             string allowedCharSet = BF_VALID_CHARS;
+
+            allowedCharSet += COMMENT_CHAR;
             if (address != null) allowedCharSet += GetAvailableMethodNames(address);
             if (debugMode) allowedCharSet += DEBUG_CHARS;
             Console.WriteLine(allowedCharSet);
