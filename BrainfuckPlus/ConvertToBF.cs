@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace BrainfuckPlus
 {
-    internal class ConvertToBF
+    internal static class ConvertToBF
     {
+        public static void Convert(string code)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

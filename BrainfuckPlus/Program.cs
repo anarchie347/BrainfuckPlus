@@ -16,8 +16,11 @@
              * 
             */
 
-            string? fileAddress = GetFileAddress();
-            GetSourceCode.GetCode(fileAddress, true);
+            string testCodeDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            testCodeDirectory = Directory.GetParent(testCodeDirectory).Parent.Parent.Parent.Parent.ToString() + "/testcode";
+            Console.WriteLine(testCodeDirectory);
+            string? fileAddress = $"{testCodeDirectory}/main.bfp";//GetFileAddress();
+            Console.WriteLine(GetSourceCode.GetCode(fileAddress, true));
         }
 
         static string? GetFileAddress()
