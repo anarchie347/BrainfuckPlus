@@ -17,6 +17,8 @@
             */
 
             string testCodeDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            // get the folder for test code
+            //test code is in this folder so it is tracked by git, so it can be used when cloning the repo
             testCodeDirectory = Directory.GetParent(testCodeDirectory).Parent.Parent.Parent.Parent.ToString() + "/testcode";
             Console.WriteLine(testCodeDirectory);
             string? fileAddress = $"{testCodeDirectory}/main.bfp";//GetFileAddress();
