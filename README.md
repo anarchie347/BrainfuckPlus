@@ -30,6 +30,8 @@ All names are allowed for methods so long as they are allowed by Windows as a fi
 
 All methods that a programme uses must be in the same directory as the main code file (might add a way to make methods available for all projects later)
 
+At runtime, all methods calls are substituted with their corresponding brainfuck code, so **recursion is NOT possible** because it will cause a crash by endlessly substituting the method inside itself. This could be fixed by editing the interpreter, but this go against one of the main principles of brainfuck plus - it transpiles directly (and easily) to brainfuck
+
 ### Shorthand Repetition
 
 Tired of writing + 65 times in order to be able to output A?
