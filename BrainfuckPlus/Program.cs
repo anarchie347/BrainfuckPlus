@@ -2,6 +2,13 @@
 {
     internal class Program
     {
+
+
+        public const string BF_VALID_CHARS = "[],.+-<>";
+        public const string DEBUG_CHARS = @"\:*?""|"; //chars that are not allowed in Windows fle names -> cant be methods (on windows). doesnt include /,<,>, these are used for other purposes
+        public const char COMMENT_CHAR = '/';
+        public const string FILE_EXTENSION = ".bfp";
+
         static void Main(string[] args)
         {
             /*Options
