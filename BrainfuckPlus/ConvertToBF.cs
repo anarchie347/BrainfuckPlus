@@ -24,15 +24,19 @@ namespace BrainfuckPlus
             {
                 if (extraValidChars.Contains(code[i]))
                 {
-                    code = Substitute(code, code[i], directory);
+                    code = Substitute(code, code[i], extraValidChars, directory);
                 }
             }
+            return code;
         }
 
-        public static string Substitute(string code, int charIndex, string directory)
+        public static string Substitute(string code, int charIndex, string extraValidChars, string directory)
         {
-            string codeToInsert = File.ReadAllText($"{directory}/{charIndex}.{Program.FILE_EXTENSION}");
-            code = code.Substring(0,code)
+            string codeToInsert = File.ReadAllText($"{directory}/{code[charIndex]}.{Program.FILE_EXTENSION}");
+            codeToInsert = RecursiveFindSubstitutions(codeToInsert, extraValidChars, directory);
+            code = string.Concat(code.AsSpan(0,charIndex), codeToInsert, code.AsSpan(charIndex+1));
+
+            return code;
         }
     }
 }
