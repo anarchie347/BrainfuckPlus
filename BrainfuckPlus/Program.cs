@@ -45,7 +45,7 @@
             string? fileAddress = $"{testCodeDirectory}/main.bfp";//GetFileAddress();
             string bfpcode = GetSourceCode.GetCode(fileAddress, true, out methodNames);
 
-            string bfcode = ConvertToBF.Convert(bfpcode, methodNames, fileAddress);
+            string bfcode = ConvertToBF.Convert(bfpcode, methodNames, fileAddress, true);
             Console.WriteLine(bfpcode);
             Console.WriteLine();
             Console.WriteLine();
