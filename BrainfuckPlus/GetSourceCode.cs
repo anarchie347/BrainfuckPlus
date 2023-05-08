@@ -11,13 +11,18 @@ namespace BrainfuckPlus
     internal static class GetSourceCode
     {
         
-        public static string GetCode(string? address, bool debugMode)
+        public static string GetCode(string? address, bool debugMode, out string methodNames)
         {
+            methodNames = string.Empty;
             string code = (address == null ? InputCode.Input() : File.ReadAllText(address));
             string allowedCharSet = Program.BF_VALID_CHARS;
 
             allowedCharSet += Program.COMMENT_CHAR;
-            if (address != null) allowedCharSet += GetAvailableMethodNames(address);
+            if (address != null)
+            {
+                methodNames = GetAvailableMethodNames(address);
+                allowedCharSet += methodNames;
+            }
             if (debugMode) allowedCharSet += Program.DEBUG_CHARS;
             Console.WriteLine(allowedCharSet);
 
@@ -35,7 +40,7 @@ namespace BrainfuckPlus
                 return "";
             string[] fileNames;
             fileNames = Directory.GetFiles(address);
-            fileNames = fileNames.Where(name => name.EndsWith(Program.FILE_EXTENSION)).ToArray();
+            fileNames = fileNames.Where(name => name.EndsWith('.' + Program.FILE_EXTENSION)).ToArray();
             fileNames = fileNames.Select(name => name[..^4]).ToArray(); //remove file extension
             fileNames = fileNames.Select(name => name[(name.LastIndexOf('\\') + 1)..]).ToArray(); //remove path to just leave filename
             string fileFirstChars = "";

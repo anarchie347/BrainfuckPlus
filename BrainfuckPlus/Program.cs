@@ -7,7 +7,7 @@
         public const string BF_VALID_CHARS = "[],.+-<>";
         public const string DEBUG_CHARS = @"\:*?""|"; //chars that are not allowed in Windows fle names -> cant be methods (on windows). doesnt include /,<,>, these are used for other purposes
         public const char COMMENT_CHAR = '/';
-        public const string FILE_EXTENSION = ".bfp";
+        public const string FILE_EXTENSION = "bfp";
 
         static void Main(string[] args)
         {
@@ -41,8 +41,16 @@
             //test code is in this folder so it is tracked by git, so it can be used when cloning the repo
             testCodeDirectory = Directory.GetParent(testCodeDirectory).Parent.Parent.Parent.Parent.ToString() + "/testcode";
             Console.WriteLine(testCodeDirectory);
+            string methodNames;
             string? fileAddress = $"{testCodeDirectory}/main.bfp";//GetFileAddress();
-            Console.WriteLine(GetSourceCode.GetCode(fileAddress, true));
+            string bfpcode = GetSourceCode.GetCode(fileAddress, true, out methodNames);
+
+            string bfcode = ConvertToBF.Convert(bfpcode, methodNames, fileAddress);
+            Console.WriteLine(bfpcode);
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine(bfcode);
+
         }
 
         static string? GetFileAddress()
