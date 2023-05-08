@@ -32,6 +32,20 @@ All methods that a programme uses must be in the same directory as the main code
 
 At runtime, all methods calls are substituted with their corresponding brainfuck code, so **recursion is NOT possible** because it will cause a crash by endlessly substituting the method inside itself. This could be fixed by editing the interpreter, but this go against one of the main principles of brainfuck plus - it transpiles directly (and easily) to brainfuck
 
+### Code injections
+
+Allows you to pass code as a parameter to methods
+
+Works similar to passing functions as methods in most languages
+
+For example, you could create a fucnction that functionsd as a for loop: you pass it start and end count paramters using the memory array, and pass it code to run in the loop as a parameter
+
+You will (probably) be able to pass multiple sections of code as parameters
+
+At runtime, the injected code is substituted into the method which is then substituted into the main code to create valid brainfuck code
+
+The syntax for this is currently undecided but will likely involve characters that are currently not used by brainfuck and are not allowed in file names in windows
+
 ### Shorthand Repetition
 
 Tired of writing + 65 times in order to be able to output A?
