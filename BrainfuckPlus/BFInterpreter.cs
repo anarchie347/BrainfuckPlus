@@ -12,7 +12,7 @@ namespace BrainFuckPlus
 {
     internal class BFInterpreter
     {
-        static void Main(string code)
+        public static void Run(string code)
         {
             Console.OutputEncoding = Encoding.UTF8;
 
@@ -74,7 +74,11 @@ namespace BrainFuckPlus
                     case '.':
                         try
                         {
-                            Console.Write((char)pseudoMemory[currentMemoryPointerPosition]);
+                            //brainfuck uses 10 as newline. different OSs use different for newline
+                            if (pseudoMemory[currentMemoryPointerPosition] == 10)
+                                Console.WriteLine();
+                            else
+                                Console.Write((char)pseudoMemory[currentMemoryPointerPosition]);
                             interpreterPosition++;
                         }
                         catch
@@ -84,9 +88,16 @@ namespace BrainFuckPlus
                         break;
                     case ',':
                         char keyInput = '\u0000';
+                        ConsoleKeyInfo keyInputKeyInfo;
                         try
                         {
-                            keyInput = Console.ReadKey().KeyChar;
+                            //brainfuck uses 10 as newline. different OSs use different for newline
+                            keyInputKeyInfo = Console.ReadKey();
+                            if (keyInputKeyInfo.Key == ConsoleKey.Enter)
+                                keyInput = '\u000A';
+                            else
+                                keyInput = keyInputKeyInfo.KeyChar;
+                            
                             pseudoMemory[currentMemoryPointerPosition] = (byte)keyInput;
                             interpreterPosition++;
                         }

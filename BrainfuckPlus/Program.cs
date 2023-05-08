@@ -1,4 +1,6 @@
-﻿namespace BrainfuckPlus
+﻿using BrainFuckPlus;
+
+namespace BrainfuckPlus
 {
     internal class Program
     {
@@ -50,6 +52,9 @@
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine(bfcode);
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            BFInterpreter.Run(bfcode);
 
         }
 
