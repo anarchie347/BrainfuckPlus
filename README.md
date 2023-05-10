@@ -44,7 +44,7 @@ You will (probably) be able to pass multiple sections of code as parameters
 
 At runtime, the injected code is substituted into the method which is then substituted into the main code to create valid brainfuck code
 
-The syntax for this is currently undecided but will likely involve characters that are currently not used by brainfuck and are not allowed in file names in windows
+The syntax for this is putting the injection code inside curly braces. Code injections can be nested (injecting code can contain other methods that themselves have injecting code)
 
 ### Shorthand Repetition
 
@@ -58,7 +58,21 @@ e.g `*10+` is the same as `++++++++++`
 
 ### Debug characters
 
-Some characters (curently planned to be `\:?"|` can be used to output information about the current state of the program. These commands are only allowed if the programme is running in debug mode, so should not be part of a final programme
+Some characters (currently \:*?"|) can be used to output information about the current state of the program. These commands are only allowed if the programme is running in debug mode, so should not be part of a final programme
+
+\ - waits for the enter key to be pressed (similar to Console.ReadLine())
+
+: - outputs the current position of the pointer
+
+* - increments a hidden counter then outputs its value (can be used to keep track of loops). This counter can only be accessed by this debug character
+
+? - outputs the integer value stored in the current cell (not translated using ascii)
+
+" - waits 0.1s
+
+| - no function (yet)
+
+All outputs from debug characters is outputted in magenta text and starts with *DEBUG*, so it is not suitable for use outside of testing
 
 ### Comments
 
