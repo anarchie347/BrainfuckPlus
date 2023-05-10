@@ -12,7 +12,7 @@ namespace BrainFuckPlus
 {
     internal class BFInterpreter
     {
-        public static void Run(string code)
+        public static void Run(string code, bool mayContainComments)
         {
             Console.OutputEncoding = Encoding.UTF8;
 
@@ -191,9 +191,6 @@ namespace BrainFuckPlus
                     case '~':
                         Console.ReadLine();
                         break;
-                    default:
-                        ErrorMessages.InvalidChar(interpreterPosition, code[interpreterPosition]);
-                        break;
 
                 }
                 string setTitle = "";
@@ -214,6 +211,15 @@ namespace BrainFuckPlus
             Console.ReadKey();
         }
 
+        public static bool ContainsNonCodeChars(string code, string charSet)
+        {
+            for (int i = 0; i < charSet.Length; i++)
+            {
+                if (charSet.Contains(code[i]))
+                    return true;
+            }
+            return false;
+        }
     }
 
     public static class ErrorMessages
@@ -290,13 +296,6 @@ namespace BrainFuckPlus
             StartOfErrorMessage(interpreterPointerPosition);
             Console.WriteLine("Error: no corresponding ] was found");
             Console.WriteLine($"The [ at position {interpreterPointerPosition} did not have a corresponding ]");
-            EndOfErrorMessage();
-        }
-
-        public static void InvalidChar(int interpreterPosition, char c)
-        {
-            StartOfErrorMessage(interpreterPosition);
-            Console.WriteLine($"Something went wrong while transpiling: character {c} was not removed or substituted");
             EndOfErrorMessage();
         }
 
