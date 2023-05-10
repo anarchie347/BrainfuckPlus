@@ -23,6 +23,7 @@ namespace BrainFuckPlus
             int currentMemoryPointerPosition = 0;
             int interpreterPosition = 0;
             int nestedLoopCount;
+            int debugHiddenCounter = 0;
 
             //--------------------------------
             //           Run code
@@ -188,9 +189,44 @@ namespace BrainFuckPlus
 
                         }
                         break;
-                    case '~':
+
+
+                    //---------------
+                    //-----DEBUG-----
+                    //---------------
+                    case '\\':
                         Console.ReadLine();
+                        interpreterPosition++;
                         break;
+                    case ':':
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.WriteLine($"DEBUG: Current pointer position = {currentMemoryPointerPosition}");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        interpreterPosition++;
+                        break;
+                    case '*':
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        debugHiddenCounter++;
+                        Console.WriteLine($"DEBUG: Current debug hidden counter value  = {debugHiddenCounter}");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        interpreterPosition++;
+                        break;
+                    case '?':
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.WriteLine($"DEBUG: Current cell value = {Memory[currentMemoryPointerPosition]}");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        interpreterPosition++;
+                        break;
+                    case '"':
+                        Thread.Sleep(100);
+                        interpreterPosition++;
+                        break;
+                    case '|':
+                        interpreterPosition++;
+                        break;
+
+
+
 
                 }
                 string setTitle = "";
