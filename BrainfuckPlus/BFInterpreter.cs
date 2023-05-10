@@ -17,7 +17,7 @@ namespace BrainFuckPlus
             Console.OutputEncoding = Encoding.UTF8;
 
             //given memory number = number of bits
-            byte[] pseudoMemory = new byte[30000];
+            byte[] Memory = new byte[30000];
 
             
             int currentMemoryPointerPosition = 0;
@@ -31,7 +31,7 @@ namespace BrainFuckPlus
             //Console.ForegroundColor = ConsoleColor.DarkCyan;
             //Console.WriteLine(code.Length);
             //Console.ForegroundColor = ConsoleColor.Green;
-            //Console.WriteLine(pseudoMemory.Length);
+            //Console.WriteLine(Memory.Length);
             //Console.WriteLine("OK");
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -53,9 +53,9 @@ namespace BrainFuckPlus
                         }
                         break;
                     case '>':
-                        if (currentMemoryPointerPosition == pseudoMemory.Length - 1)
+                        if (currentMemoryPointerPosition == Memory.Length - 1)
                         {
-                            ErrorMessages.PointerOverflow(pseudoMemory.Length, interpreterPosition);
+                            ErrorMessages.PointerOverflow(Memory.Length, interpreterPosition);
                         }
                         else
                         {
@@ -64,26 +64,26 @@ namespace BrainFuckPlus
                         }
                         break;
                     case '+':
-                        pseudoMemory[currentMemoryPointerPosition]++;
+                        Memory[currentMemoryPointerPosition]++;
                         interpreterPosition++;
                         break;
                     case '-':
-                        pseudoMemory[currentMemoryPointerPosition]--;
+                        Memory[currentMemoryPointerPosition]--;
                         interpreterPosition++;
                         break;
                     case '.':
                         try
                         {
                             //brainfuck uses 10 as newline. different OSs use different for newline
-                            if (pseudoMemory[currentMemoryPointerPosition] == 10)
+                            if (Memory[currentMemoryPointerPosition] == 10)
                                 Console.WriteLine();
                             else
-                                Console.Write((char)pseudoMemory[currentMemoryPointerPosition]);
+                                Console.Write((char)Memory[currentMemoryPointerPosition]);
                             interpreterPosition++;
                         }
                         catch
                         {
-                            ErrorMessages.NoCorrespondingChar(pseudoMemory[currentMemoryPointerPosition], currentMemoryPointerPosition, interpreterPosition);
+                            ErrorMessages.NoCorrespondingChar(Memory[currentMemoryPointerPosition], currentMemoryPointerPosition, interpreterPosition);
                         }
                         break;
                     case ',':
@@ -98,7 +98,7 @@ namespace BrainFuckPlus
                             else
                                 keyInput = keyInputKeyInfo.KeyChar;
                             
-                            pseudoMemory[currentMemoryPointerPosition] = (byte)keyInput;
+                            Memory[currentMemoryPointerPosition] = (byte)keyInput;
                             interpreterPosition++;
                         }
                         catch
@@ -109,7 +109,7 @@ namespace BrainFuckPlus
                     case '[':
                         try
                         {
-                            if (pseudoMemory[currentMemoryPointerPosition] == 0)
+                            if (Memory[currentMemoryPointerPosition] == 0)
                             {
                                 int searchForCloseBracketIndex = interpreterPosition + 1;
                                 nestedLoopCount = 0;
@@ -151,7 +151,7 @@ namespace BrainFuckPlus
                     case ']':
                         try
                         {
-                            if (pseudoMemory[currentMemoryPointerPosition] != 0)
+                            if (Memory[currentMemoryPointerPosition] != 0)
                             {
                                 int searchForOpenBracketIndex = interpreterPosition - 1;
                                 nestedLoopCount = 0;
@@ -191,17 +191,20 @@ namespace BrainFuckPlus
                     case '~':
                         Console.ReadLine();
                         break;
+                    default:
+                        ErrorMessages.InvalidChar(interpreterPosition, code[interpreterPosition]);
+                        break;
 
                 }
                 string setTitle = "";
                 for (int i = 0; i <= 9; i++)
                 {
-                    setTitle += pseudoMemory[i] + " ";
+                    setTitle += Memory[i] + " ";
                 }
                 Console.Title = setTitle;
-                //Console.Title = ($"Position: {currentMemoryPointerPosition}, value: {pseudoMemory[currentMemoryPointerPosition]}"); //debug mode
-                //Console.Title = $"{pseudoMemory[0] - 48} {pseudoMemory[1] - 48} {pseudoMemory[2] - 48} {pseudoMemory[3] - 48} {pseudoMemory[4] - 48} {pseudoMemory[5] - 48}";
-                //Console.Title = $"{pseudoMemory[0]} {pseudoMemory[1]} {pseudoMemory[2]} {pseudoMemory[3]} {pseudoMemory[4]} {pseudoMemory[5]} {pseudoMemory[6]} {pseudoMemory[7]}";
+                //Console.Title = ($"Position: {currentMemoryPointerPosition}, value: {Memory[currentMemoryPointerPosition]}"); //debug mode
+                //Console.Title = $"{Memory[0] - 48} {Memory[1] - 48} {Memory[2] - 48} {Memory[3] - 48} {Memory[4] - 48} {Memory[5] - 48}";
+                //Console.Title = $"{Memory[0]} {Memory[1]} {Memory[2]} {Memory[3]} {Memory[4]} {Memory[5]} {Memory[6]} {Memory[7]}";
                 //Console.ReadKey(true);  //step by step debugging
                 //Thread.Sleep(5);
             }
@@ -287,6 +290,13 @@ namespace BrainFuckPlus
             StartOfErrorMessage(interpreterPointerPosition);
             Console.WriteLine("Error: no corresponding ] was found");
             Console.WriteLine($"The [ at position {interpreterPointerPosition} did not have a corresponding ]");
+            EndOfErrorMessage();
+        }
+
+        public static void InvalidChar(int interpreterPosition, char c)
+        {
+            StartOfErrorMessage(interpreterPosition);
+            Console.WriteLine($"Something went wrong while transpiling: character {c} was not removed or substituted");
             EndOfErrorMessage();
         }
 
