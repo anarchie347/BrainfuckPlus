@@ -44,7 +44,7 @@ namespace BrainfuckPlus
                         if (currentMemoryPointerPosition == 0)
                         {
 
-                            Errors.NegativePointerPosition(interpreterPosition);
+                            Errors.BFInterpreter.NegativePointerPosition(interpreterPosition);
                         }
                         else
                         {
@@ -55,7 +55,7 @@ namespace BrainfuckPlus
                     case '>':
                         if (currentMemoryPointerPosition == Memory.Length - 1)
                         {
-                            Errors.PointerOverflow(Memory.Length, interpreterPosition);
+                            Errors.BFInterpreter.PointerOverflow(Memory.Length, interpreterPosition);
                         }
                         else
                         {
@@ -83,7 +83,7 @@ namespace BrainfuckPlus
                         }
                         catch
                         {
-                            Errors.NoCorrespondingChar(Memory[currentMemoryPointerPosition], currentMemoryPointerPosition, interpreterPosition);
+                            Errors.BFInterpreter.NoCorrespondingChar(Memory[currentMemoryPointerPosition], currentMemoryPointerPosition, interpreterPosition);
                         }
                         break;
                     case ',':
@@ -103,7 +103,7 @@ namespace BrainfuckPlus
                         }
                         catch
                         {
-                            Errors.InvalidCharEntered(keyInput, interpreterPosition);
+                            Errors.BFInterpreter.InvalidCharEntered(keyInput, interpreterPosition);
                         }
                         break;
                     case '[':
@@ -126,7 +126,7 @@ namespace BrainfuckPlus
                                     }
                                     if (searchForCloseBracketIndex == code.Length)
                                     {
-                                        Errors.NoCorrespondinCloseBracket(interpreterPosition);
+                                        Errors.BFInterpreter.NoCorrespondinCloseBracket(interpreterPosition);
                                     }
                                     searchForCloseBracketIndex++;
                                 }
@@ -169,7 +169,7 @@ namespace BrainfuckPlus
 
                                     if (searchForOpenBracketIndex == -1)
                                     {
-                                        Errors.NoCorrespondingOpenBracket(interpreterPosition);
+                                        Errors.BFInterpreter.NoCorrespondingOpenBracket(interpreterPosition);
                                     }
                                     searchForOpenBracketIndex--;
                                 }
