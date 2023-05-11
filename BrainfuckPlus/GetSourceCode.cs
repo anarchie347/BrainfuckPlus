@@ -29,8 +29,17 @@ namespace BrainfuckPlus
             code = RemoveCommentsAndNewLines(code);
             code = RemoveInvalidChars(code, allowedCharSet);
 
-
             return code;
+        }
+
+        public static string? GetAddress(char chr, string directory)
+        {
+            //gets the first file it finds that starts with the corresponding character
+            bool nameCheck(string name) //check if the name begins with chr and is a .bfp file (only checked if the file has an extension, not all OSs enforce file extensions
+            {
+                return Path.GetFileNameWithoutExtension(name).StartsWith(chr) && (!Path.HasExtension(name) || (Path.GetExtension(name) == $".{Program.FILE_EXTENSION}"));
+            };
+            return Directory.GetFiles(directory).Where(name => nameCheck(name)).ToArray().FirstOrDefault();
         }
 
         public static string GetAvailableMethodNames(string? address)
@@ -42,7 +51,7 @@ namespace BrainfuckPlus
             fileNames = Directory.GetFiles(address);
             fileNames = fileNames.Where(name => name.EndsWith('.' + Program.FILE_EXTENSION)).ToArray();
             fileNames = fileNames.Select(name => name[..^4]).ToArray(); //remove file extension
-            fileNames = fileNames.Select(name => name[(name.LastIndexOf('\\') + 1)..]).ToArray(); //remove path to just leave filename
+            fileNames = fileNames.Select(name => Path.GetFileName(name)).ToArray(); //remove directory to just leave filename
             string fileFirstChars = "";
             for (int i = 0; i < fileNames.Length; i++)
             {

@@ -33,7 +33,7 @@ namespace BrainfuckPlus
         public static string Substitute(string code, int charIndex, string extraValidChars, string directory, bool debugMode)
         {
             string codeToInsert;// = File.ReadAllText($"{directory}/{code[charIndex]}.{Program.FILE_EXTENSION}");
-            codeToInsert = GetSourceCode.GetCode($"{directory}/{code[charIndex]}.{Program.FILE_EXTENSION}", debugMode, out string v);
+            codeToInsert = GetSourceCode.GetCode(GetSourceCode.GetAddress(code[charIndex], directory), debugMode, out string v);
             codeToInsert = RecursiveFindSubstitutions(codeToInsert, extraValidChars, directory, debugMode);
             code = string.Concat(code.AsSpan(0,charIndex), codeToInsert, code.AsSpan(charIndex+1));
 
