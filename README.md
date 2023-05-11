@@ -64,7 +64,7 @@ Some characters (currently \:*?"|) can be used to output information about the c
 
 : - outputs the current position of the pointer
 
-* - increments a hidden counter then outputs its value (can be used to keep track of loops). This counter can only be accessed by this debug character
+\* - increments a hidden counter then outputs its value (can be used to keep track of loops). This counter can only be accessed by this debug character
 
 ? - outputs the integer value stored in the current cell (not translated using ascii)
 
