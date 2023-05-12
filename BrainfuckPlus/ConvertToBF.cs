@@ -13,6 +13,34 @@ namespace BrainfuckPlus
         public static string Convert(string code, string methodNames,string fileAddress, bool debugMode)
         {
             string directory = Path.GetDirectoryName(fileAddress) ?? fileAddress;
+            int j;
+            string repetitionCounter;
+            bool exit;
+
+            for (int i = code.Length - 1; i >= 0; i--)
+            {
+                if (code[i] == Program.REPETITION_CHAR)
+                {
+                    j = i;
+                    repetitionCounter = string.Empty;
+                    exit = false;
+                    do
+                    { 
+                        j++;
+
+                        if (code.Length - 1 > j) {
+                            exit = char.IsDigit(code[j]);
+                            Console.WriteLine(exit);
+                        }
+                        
+                        if (code.Length - 1 > j && (exit = char.IsDigit(code[j])))
+                            repetitionCounter += code[j];
+                    } while (!exit);
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine(repetitionCounter);
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
             code = RecursiveFindSubstitutions(code, methodNames, directory, debugMode);
 
             return code;

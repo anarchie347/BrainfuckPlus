@@ -13,7 +13,6 @@ namespace BrainfuckPlus
         
         public static string GetCode(string address, bool debugMode, out string methodNames)
         {
-            methodNames = string.Empty;
             string code = File.ReadAllText(address);
             string allowedCharSet = Program.BF_VALID_CHARS;
 
