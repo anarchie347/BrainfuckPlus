@@ -50,7 +50,7 @@ The syntax for this is putting the injection code inside curly braces. Code inje
 
 Tired of writing + 65 times in order to be able to output A?
 
-use a * followed by a positive integer followed by the method to repeat that method that amount of times
+use a \* followed by a positive integer followed by the method to repeat that method that amount of times
 
 Like methods, they are converted to brainfuck when executing
 
@@ -58,19 +58,17 @@ e.g `*10+` is the same as `++++++++++`
 
 ### Debug characters
 
-Some characters (currently \:*?"|) can be used to output information about the current state of the program. These commands are only allowed if the programme is running in debug mode, so should not be part of a final programme
+Some characters (currently \:?"|) can be used to output information about the current state of the program. These commands are only allowed if the programme is running in debug mode, so should not be part of a final programme
 
 \ - waits for the enter key to be pressed (similar to Console.ReadLine())
 
 : - outputs the current position of the pointer
 
-\* - increments a hidden counter then outputs its value (can be used to keep track of loops). This counter can only be accessed by this debug character
-
 ? - outputs the integer value stored in the current cell (not translated using ascii)
 
 " - waits 0.1s
 
-| - no function (yet)
+| - increments a hidden counter then outputs its value (can be used to keep track of loops). This counter can only be accessed by this debug character
 
 All outputs from debug characters is outputted in magenta text and starts with *DEBUG*, so it is not suitable for use outside of testing
 
