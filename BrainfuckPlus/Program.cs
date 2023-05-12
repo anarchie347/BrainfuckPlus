@@ -7,7 +7,7 @@ namespace BrainfuckPlus
 
 
         public const string BF_VALID_CHARS = "[],.+-<>";
-        public const string DEBUG_CHARS = @"\:*?""|"; //chars that are not allowed in Windows fle names -> cant be methods (on windows). doesnt include /,<,>, these are used for other purposes
+        public const string DEBUG_CHARS = @"\:?""|"; //chars that are not allowed in Windows fle names -> cant be methods (on windows). doesnt include /,<,>, these are used for other purposes
         public const char COMMENT_CHAR = '/';
         public const char CODE_INJECTION_START_CHAR = '{';
         public const char CODE_INJECTION_END_CHAR = '}';
@@ -39,10 +39,9 @@ namespace BrainfuckPlus
              * Debug chars:
              * \ waits for enter key to be pressed (Console.ReadLine();)
              * : outputs the current position of the pointer
-             * * increments a hidden counter then outputs its value (can be used to keep track of loops). This counter can only be accessed by this debug character
              * ? outputs the integer value stored in the current cell (not translated using ascii)
              * " waits 0.1s
-             * | no function (yet)
+             * | increments a hidden counter then outputs its value (can be used to keep track of loops). This counter can only be accessed by this debug character
              * 
             */
 

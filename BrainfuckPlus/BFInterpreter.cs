@@ -202,14 +202,7 @@ namespace BrainfuckPlus
                         Console.WriteLine($"DEBUG: Current pointer position = {currentMemoryPointerPosition}");
                         Console.ForegroundColor = ConsoleColor.White;
                         interpreterPosition++;
-                        break;
-                    case '*':
-                        Console.ForegroundColor = ConsoleColor.Magenta;
-                        debugHiddenCounter++;
-                        Console.WriteLine($"DEBUG: Current debug hidden counter value  = {debugHiddenCounter}");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        interpreterPosition++;
-                        break;
+                        break;       
                     case '?':
                         Console.ForegroundColor = ConsoleColor.Magenta;
                         Console.WriteLine($"DEBUG: Current cell value = {Memory[currentMemoryPointerPosition]}");
@@ -221,6 +214,10 @@ namespace BrainfuckPlus
                         interpreterPosition++;
                         break;
                     case '|':
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        debugHiddenCounter++;
+                        Console.WriteLine($"DEBUG: Current debug hidden counter value  = {debugHiddenCounter}");
+                        Console.ForegroundColor = ConsoleColor.White;
                         interpreterPosition++;
                         break;
 
