@@ -17,7 +17,7 @@ namespace BrainfuckPlus
             string code = (address == null ? InputCode.Input() : File.ReadAllText(address));
             string allowedCharSet = Program.BF_VALID_CHARS;
 
-            allowedCharSet += Program.COMMENT_CHAR;
+            allowedCharSet += Program.EXTRA_ALLOWED_CHARS;
             if (address != null)
             {
                 methodNames = GetAvailableMethodNames(address);

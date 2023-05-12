@@ -11,7 +11,9 @@ namespace BrainfuckPlus
         public const char COMMENT_CHAR = '/';
         public const char CODE_INJECTION_START_CHAR = '{';
         public const char CODE_INJECTION_END_CHAR = '}';
+        public const char REPETITION_CHAR = '*';
         public const string FILE_EXTENSION = "bfp";
+        public static readonly string EXTRA_ALLOWED_CHARS = new string(new char[] { COMMENT_CHAR, CODE_INJECTION_START_CHAR, CODE_INJECTION_END_CHAR, REPETITION_CHAR });
 
         static void Main(string[] args)
         {
