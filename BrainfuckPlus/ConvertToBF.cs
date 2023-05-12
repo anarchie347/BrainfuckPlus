@@ -13,37 +13,76 @@ namespace BrainfuckPlus
         public static string Convert(string code, string methodNames,string fileAddress, bool debugMode)
         {
             string directory = Path.GetDirectoryName(fileAddress) ?? fileAddress;
-            int j;
-            string repetitionCounter;
-            bool exit;
-
-            for (int i = code.Length - 1; i >= 0; i--)
-            {
-                if (code[i] == Program.REPETITION_CHAR)
-                {
-                    j = i;
-                    repetitionCounter = string.Empty;
-                    exit = false;
-                    do
-                    { 
-                        j++;
-
-                        if (code.Length - 1 > j) {
-                            exit = char.IsDigit(code[j]);
-                            Console.WriteLine(exit);
-                        }
-                        
-                        if (code.Length - 1 > j && (exit = char.IsDigit(code[j])))
-                            repetitionCounter += code[j];
-                    } while (!exit);
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine(repetitionCounter);
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-            }
+            code = ExpandRepetitions(code);
             code = RecursiveFindSubstitutions(code, methodNames, directory, debugMode);
 
             return code;
+        }
+
+        private static string ExpandRepetitions(string code)
+        {
+            string newCode = string.Empty;
+            int j;
+            string repetitionCounter;
+
+            //for (int i = code.Length - 1; i >= 0; i--)
+            //{
+            //    if (code[i] == Program.REPETITION_CHAR)
+            //    {
+            //        j = i + 1;
+            //        repetitionCounter = string.Empty;
+            //        while (j < code.Length && char.IsDigit(code[j]))
+            //        {
+            //            repetitionCounter += code[j];
+            //            j++;
+            //        }
+
+            //        Console.ForegroundColor = ConsoleColor.DarkRed;
+            //        Console.WriteLine(repetitionCounter);
+            //        Console.ForegroundColor = ConsoleColor.White;
+
+            //        if (code.Length > j) newCode += new string(code[j], int.Parse(repetitionCounter));
+            //        else throw new Exception("Oh no, there was no operater char at the end for the repetition");
+            //    }
+            //}
+
+
+
+            for (int i = 0; i < code.Length; i++)
+            {
+                if (code[i] == Program.REPETITION_CHAR)
+                {
+                    
+                    j = i + 1;
+                    repetitionCounter = string.Empty;
+                    while (j < code.Length && char.IsDigit(code[j]))
+                    {
+                        repetitionCounter += code[j];
+                        j++;
+                    }
+
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine(repetitionCounter);
+                    Console.WriteLine($"j={j}");
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    if (code.Length > j)
+                        if (repetitionCounter == string.Empty)
+                            throw new Exception("Oh no, there was no number for the shorthand repetition because it was not a number");
+                        else if (code[j] == Program.REPETITION_CHAR)
+                            throw new Exception("Oh no, there was no operater char at the end for the repetition because is was the repetition char");
+                        else
+                            newCode += new string(code[j], int.Parse(repetitionCounter));
+                    else if (repetitionCounter == string.Empty)
+                        throw new Exception("Oh no, there was no number for the shorthand repetition because the end of the string was reached");
+                    else
+                        throw new Exception("Oh no, there was no operater char at the end for the repetition because the end of the code was reached");
+                    i = j;
+                }
+                else
+                    newCode += code[i];
+            }
+            return newCode;
         }
 
         public static string RecursiveFindSubstitutions(string code, string extraValidChars, string directory, bool debugMode)

@@ -71,9 +71,12 @@ namespace BrainfuckPlus
         public static string RemoveInvalidChars(string code, string allowedCharSet)
         {
             string newCode = "";
+            bool followingRepetitionChar = false;
             for (int i = 0; i < code.Length; i++)
             {
-                if (allowedCharSet.Contains(code[i])) newCode += code[i];
+                if (allowedCharSet.Contains(code[i]) || followingRepetitionChar && char.IsDigit(code[i]))
+                    newCode += code[i]; 
+                followingRepetitionChar = (code[i] == Program.REPETITION_CHAR) || (followingRepetitionChar && char.IsDigit(code[i])); //preserves number after repetition char
             }
             return newCode;
         }

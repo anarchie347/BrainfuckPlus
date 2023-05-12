@@ -50,10 +50,10 @@ namespace BrainfuckPlus
             string testCodeDirectory = AppDomain.CurrentDomain.BaseDirectory;
             // get the folder for test code
             //test code is in this folder so it is tracked by git, so it can be used when cloning the repo
-            testCodeDirectory = Directory.GetParent(testCodeDirectory).Parent.Parent.Parent.Parent.ToString() + "/testcode";
+            testCodeDirectory = Directory.GetParent(testCodeDirectory).Parent.Parent.Parent.Parent.ToString() + "\\testcode";
             Console.WriteLine(testCodeDirectory);
             string methodNames;
-            string? fileAddress = $"{testCodeDirectory}/main.bfp";//GetFileAddress();
+            string? fileAddress = $"{testCodeDirectory}\\main.bfp";//GetFileAddress();
             string bfpcode = GetSourceCode.GetCode(fileAddress, true, out methodNames);
 
             string bfcode = ConvertToBF.Convert(bfpcode, methodNames, fileAddress, true);
