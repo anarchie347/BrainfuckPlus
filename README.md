@@ -46,13 +46,15 @@ Works similar to passing functions as methods in most languages
 
 For example, you could create a fucnction that functionsd as a for loop: you pass it start and end count paramters using the memory array, and pass it code to run in the loop as a parameter
 
-You will (probably) be able to pass multiple sections of code as parameters
-
 At runtime, the injected code is substituted into the method which is then substituted into the main code to create valid brainfuck code
 
 The syntax for this is putting the injection code inside curly braces `{}`. Code injections can be nested (injecting code can contain other methods that themselves have injecting code)
 
-The call the injected code from insode your function, put a number inside brackets `()` corresponding to which injection argument you are using. This number must be hard coded
+You can pass multiple sections of code as parameters. To do this, simply add multiple injections after the call. as long as there are no characters between the end of the last injection `}` and the start of the next injection `{`, they will all be presumed to be for the same method call
+
+If a function calls a code injections that has not been passed (e.g. `a` should have 2 inejctions, but only one is passed) then all undefined injections will be empty strings, meaning no code is executed
+
+The call the injected code from inside your function, put a number inside brackets `()` corresponding to which injection argument you are using. This number must be hard coded
 
 The injection order is 0 indexed
 
