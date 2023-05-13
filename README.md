@@ -44,7 +44,22 @@ You will (probably) be able to pass multiple sections of code as parameters
 
 At runtime, the injected code is substituted into the method which is then substituted into the main code to create valid brainfuck code
 
-The syntax for this is putting the injection code inside curly braces. Code injections can be nested (injecting code can contain other methods that themselves have injecting code)
+The syntax for this is putting the injection code inside curly braces `{}`. Code injections can be nested (injecting code can contain other methods that themselves have injecting code)
+
+The call the injected code from insode your function, put a number inside brackets `()` corresponding to which injection argument you are using. This number must be hard coded
+
+The injection order is 0 indexed
+
+e.g.
+In main.bfp
+```
+a{++}{++}
+```
+In a.bfp
+```
+(0)>*34(1).
+```
+Method `a` takes two injections, applies the first to the current cell, and the second is applied to the cell afterwards 32 times, then outputs that value. The output of this code would be `D` (ascii value for 68)
 
 ### Shorthand Repetition
 
