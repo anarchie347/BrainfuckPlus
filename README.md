@@ -26,7 +26,13 @@ Methods are replaced with their regular brainfuck code when executing
 
 Methods are written in brainfuck, in a file called `something.bfp`, and the character used to call the method is the first character
 
-All names are allowed for methods so long as they are allowed by Windows as a file name and are not part of regular brainfuck syntax
+Method names have some restrictions. THey cannot use any brainfuck characters `[],.+-<>`, any of the debug chars `\\:?"|` , the comment char `/`, the code injection start end end chars `{}` the repetition char `*`, the characters used for calling injected code `()` or any numbers `0123456789`
+
+Hence the list of dissallowed characters is `[],.+-<>\\:?"|/{}*()0123456789`
+
+Some of these characters may change in the future, but they are not planned to change
+
+These restrictions only apply to the first lettter of the filename because this is the name of the method
 
 All methods that a programme uses must be in the same directory as the main code file (might add a way to make methods available for all projects later)
 
