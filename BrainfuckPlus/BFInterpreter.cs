@@ -115,7 +115,7 @@ namespace BrainfuckPlus
                                 nestedLoopCount = 0;
                                 while (nestedLoopCount != 1)
                                 {
-                                    //find the corresponding ], cannot look for previous one because of nested loops
+                                    //find the corresponding ], cannot look for next one because of nested loops
                                     if (code[searchForCloseBracketIndex] == ']')
                                     {
                                         nestedLoopCount++;
