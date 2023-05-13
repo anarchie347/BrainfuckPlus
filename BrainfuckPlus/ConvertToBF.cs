@@ -64,26 +64,62 @@ namespace BrainfuckPlus
         }
  
 
-        public static string RecursiveFindSubstitutions(string code, string extraValidChars, string directory, bool debugMode)
+        public static string RecursiveFindSubstitutions(string code, string methodNames, string directory, bool debugMode)
         {
             for (int i = code.Length - 1; i >= 0; i--)
             {
-                if (extraValidChars.Contains(code[i]))
+                if (methodNames.Contains(code[i]))
                 {
-                    code = Substitute(code, i, extraValidChars, directory, debugMode);
+                    code = Substitute(code, i, methodNames, directory, debugMode);
                 }
             }
             return code;
         }
 
-        public static string Substitute(string code, int charIndex, string extraValidChars, string directory, bool debugMode)
+        public static string Substitute(string code, int charIndex, string methodNames, string directory, bool debugMode)
         {
             string codeToInsert;// = File.ReadAllText($"{directory}/{code[charIndex]}.{Program.FILE_EXTENSION}");
             codeToInsert = GetSourceCode.GetCode(GetSourceCode.GetAddress(code[charIndex], directory), debugMode, out string v);
-            codeToInsert = RecursiveFindSubstitutions(codeToInsert, extraValidChars, directory, debugMode);
+            codeToInsert = RecursiveFindSubstitutions(codeToInsert, methodNames, directory, debugMode);
             code = string.Concat(code.AsSpan(0,charIndex), codeToInsert, code.AsSpan(charIndex+1));
 
             return code;
+        }
+
+        private static List<string> GetAndRemoveInjections(ref string code, int charIndex)
+        {
+            List<string> injections = new();
+            charIndex++;
+            while (code[charIndex] == Program.CODE_INJECTION_START_CHAR)
+            {
+                //code = code.Substring(0, charIndex) + GetBracketedContent(code.Substring(charIndex), Program.CODE_INJECTION_START_CHAR, Program.CODE_INJECTION_END_CHAR) + code.Substring();
+            }
+            return injections;
+        }
+
+        public static int GetClosingBracketIndex(string code, int openBracketIndex, char startBracket, char endBracket)
+        {
+            int index = openBracketIndex + 1;
+            int nestedLoopCount = 0;
+            while (nestedLoopCount != 1)
+            {
+                //find the corresponding close bracket, cannot look for next one because of nested loops
+                if (code[index] == endBracket)
+                {
+                    nestedLoopCount++;
+                }
+                else if (code[index] == startBracket)
+                {
+                    nestedLoopCount--;
+                }
+                if (index == code.Length)
+                {
+                    throw new Exception($"no end bracket {endBracket} found");
+                }
+                index++;
+            }
+
+            return index - 1;
         }
     }
 }
