@@ -46,8 +46,6 @@ namespace BrainfuckPlus
              * | increments a hidden counter then outputs its value (can be used to keep track of loops). This counter can only be accessed by this debug character
              * 
             */
-            
-
 
             string testCodeDirectory = AppDomain.CurrentDomain.BaseDirectory;
             // get the folder for test code
