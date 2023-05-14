@@ -117,12 +117,6 @@ This is especially useful because methods mean there may be more characters that
 
 ## Undecided features
 
-### String literals
-
-A way to write a string literal to output -> avoids having to write lots of unreadable `+` and `-`
-
-e.g. `\AB\` instead of `+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.+.`
-
 ### Extra functions
 
 Coded in C# to add functionality not possible in brainfuck, such as changing the console color, or clearing the console
