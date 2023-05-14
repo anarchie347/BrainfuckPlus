@@ -14,12 +14,12 @@ namespace BrainfuckPlus
         public static string GetCode(string address, bool debugMode, out string methodNames)
         {
             string code = File.ReadAllText(address);
-            string allowedCharSet = Program.BF_VALID_CHARS;
+            string allowedCharSet = Syntax.BF_VALID_CHARS;
 
-            allowedCharSet += Program.EXTRA_ALLOWED_CHARS;
+            allowedCharSet += Syntax.EXTRA_ALLOWED_CHARS;
             methodNames = GetAvailableMethodNames(address);
             allowedCharSet += methodNames;
-            if (debugMode) allowedCharSet += Program.DEBUG_CHARS;
+            if (debugMode) allowedCharSet += Syntax.DEBUG_CHARS;
 
             code = RemoveCommentsAndNewLines(code);
             code = RemoveInvalidChars(code, allowedCharSet);
@@ -32,7 +32,7 @@ namespace BrainfuckPlus
             //gets the first file it finds that starts with the corresponding character
             bool nameCheck(string name) //check if the name begins with chr and is a .bfp file (only checked if the file has an extension, not all OSs enforce file extensions
             {
-                return Path.GetFileNameWithoutExtension(name).StartsWith(chr) && (!Path.HasExtension(name) || (Path.GetExtension(name) == $".{Program.FILE_EXTENSION}"));
+                return Path.GetFileNameWithoutExtension(name).StartsWith(chr) && (!Path.HasExtension(name) || (Path.GetExtension(name) == $".{Syntax.FILE_EXTENSION}"));
             };
             return Directory.GetFiles(directory).Where(name => nameCheck(name)).ToArray().FirstOrDefault();
         }
@@ -44,7 +44,7 @@ namespace BrainfuckPlus
                 return "";
             string[] fileNames;
             fileNames = Directory.GetFiles(address);
-            fileNames = fileNames.Where(name => name.EndsWith('.' + Program.FILE_EXTENSION)).ToArray();
+            fileNames = fileNames.Where(name => name.EndsWith('.' + Syntax.FILE_EXTENSION)).ToArray();
             fileNames = fileNames.Select(name => name[..^4]).ToArray(); //remove file extension
             fileNames = fileNames.Select(name => Path.GetFileName(name)).ToArray(); //remove directory to just leave filename
             string fileFirstChars = "";
@@ -61,7 +61,7 @@ namespace BrainfuckPlus
             for (int i = 0; i < lines.Length; i++)
             {
                 lines[i] = lines[i].Trim();
-                index = lines[i].IndexOf(Program.COMMENT_CHAR);
+                index = lines[i].IndexOf(Syntax.COMMENT_CHAR);
                 resultingCode += (index == -1 ? lines[i] : lines[i][..index]);
             }
             return resultingCode;
@@ -76,7 +76,7 @@ namespace BrainfuckPlus
             {
                 if (allowedCharSet.Contains(code[i]) || followingRepetitionChar && char.IsDigit(code[i]))
                     newCode += code[i]; 
-                followingRepetitionChar = (code[i] == Program.REPETITION_CHAR) || (followingRepetitionChar && char.IsDigit(code[i])); //preserves number after repetition char
+                followingRepetitionChar = (code[i] == Syntax.REPETITION_CHAR) || (followingRepetitionChar && char.IsDigit(code[i])); //preserves number after repetition char
             }
             return newCode;
         }

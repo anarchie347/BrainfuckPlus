@@ -28,7 +28,7 @@ namespace BrainfuckPlus
 
             for (int i = 0; i < code.Length; i++)
             {
-                if (code[i] == Program.REPETITION_CHAR)
+                if (code[i] == Syntax.REPETITION_CHAR)
                 {
                     
                     j = i + 1;
@@ -47,7 +47,7 @@ namespace BrainfuckPlus
                     if (code.Length > j)
                         if (repetitionCounter == string.Empty)
                             throw new Exception("Oh no, there was no number for the shorthand repetition because it was not a number");
-                        else if (code[j] == Program.REPETITION_CHAR)
+                        else if (code[j] == Syntax.REPETITION_CHAR)
                             throw new Exception("Oh no, there was no operater char at the end for the repetition because is was the repetition char");
                         else
                             newCode += new string(code[j], int.Parse(repetitionCounter));
@@ -71,7 +71,7 @@ namespace BrainfuckPlus
             {
                 if (methodNames.Contains(code[i]))
                 {
-                    if (code[i + 1] == Program.CODE_INJECTION_START_CHAR)
+                    if (code[i + 1] == Syntax.CODE_INJECTION_START_CHAR)
                         injections = GetAndRemoveInjections(ref code, i);
                     else
                         injections = null;
@@ -100,9 +100,9 @@ namespace BrainfuckPlus
             List<string> injections = new();
             charIndex++;
             int closebracketIndex;
-            while (charIndex < code.Length && code[charIndex] == Program.CODE_INJECTION_START_CHAR)
+            while (charIndex < code.Length && code[charIndex] == Syntax.CODE_INJECTION_START_CHAR)
             {
-                closebracketIndex = GetClosingBracketIndex(code, charIndex, Program.CODE_INJECTION_START_CHAR, Program.CODE_INJECTION_END_CHAR);
+                closebracketIndex = GetClosingBracketIndex(code, charIndex, Syntax.CODE_INJECTION_START_CHAR, Syntax.CODE_INJECTION_END_CHAR);
                 injections.Add(code.Substring(charIndex + 1, closebracketIndex - charIndex - 1));
 
                 code = code.Substring(0,charIndex) + code.Substring(closebracketIndex + 1);
@@ -114,9 +114,9 @@ namespace BrainfuckPlus
         public static string Inject(string code, List<string> injections)
         {
             int index, closeCallIndex, injectionIndex;
-            while ((index = code.IndexOf(Program.CODE_INJECTION_CALL_START_CHAR)) != -1)
+            while ((index = code.IndexOf(Syntax.CODE_INJECTION_CALL_START_CHAR)) != -1)
             {
-                closeCallIndex = GetClosingBracketIndex(code, index, Program.CODE_INJECTION_CALL_START_CHAR, Program.CODE_INJECTION_CALL_END_CHAR);
+                closeCallIndex = GetClosingBracketIndex(code, index, Syntax.CODE_INJECTION_CALL_START_CHAR, Syntax.CODE_INJECTION_CALL_END_CHAR);
                 if (!int.TryParse(code.AsSpan(index + 1, closeCallIndex - index -1), out injectionIndex)) throw new Exception("Injection index was not an int");
 
                 code = code.Substring(0,index) + injections[injectionIndex] + code.Substring(closeCallIndex + 1); //substitute
