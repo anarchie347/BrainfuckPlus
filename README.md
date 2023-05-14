@@ -10,6 +10,16 @@ I also plan to maybe make a brainfuck plus plus in the future, which deviates mo
 
 ## Features
 
+Because brainfuckplus is in development, below is a list of which features have been implemented currently
+
+- Transpiling: Done
+- Methods: Done
+- Injections: Done
+- Shorthand repetition: Not done
+- Debug chars: Done
+- Comment: Done
+- Command line commands and interface and usability: Not done
+
 ### Transpiles to brainfuck
 
 All code is directly translatable to brainfuck
