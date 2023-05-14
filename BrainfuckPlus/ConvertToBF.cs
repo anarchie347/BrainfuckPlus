@@ -66,20 +66,28 @@ namespace BrainfuckPlus
 
         public static string RecursiveFindSubstitutions(string code, string methodNames, string directory, bool debugMode)
         {
+            List<string>? injections;
             for (int i = code.Length - 1; i >= 0; i--)
             {
                 if (methodNames.Contains(code[i]))
                 {
-                    code = Substitute(code, i, methodNames, directory, debugMode);
+                    if (code[i + 1] == Program.CODE_INJECTION_START_CHAR)
+                        injections = GetAndRemoveInjections(ref code, i);
+                    else
+                        injections = null;
+                    code = Substitute(code, i, methodNames, directory, debugMode, injections);
                 }
             }
             return code;
         }
 
-        public static string Substitute(string code, int charIndex, string methodNames, string directory, bool debugMode)
+        public static string Substitute(string code, int charIndex, string methodNames, string directory, bool debugMode, List<string>? injections = null)
         {
             string codeToInsert;// = File.ReadAllText($"{directory}/{code[charIndex]}.{Program.FILE_EXTENSION}");
             codeToInsert = GetSourceCode.GetCode(GetSourceCode.GetAddress(code[charIndex], directory), debugMode, out string v);
+            if (injections != null) codeToInsert = Inject(codeToInsert, injections);
+
+
             codeToInsert = RecursiveFindSubstitutions(codeToInsert, methodNames, directory, debugMode);
             code = string.Concat(code.AsSpan(0,charIndex), codeToInsert, code.AsSpan(charIndex+1));
 
@@ -88,19 +96,34 @@ namespace BrainfuckPlus
 
         public static List<string> GetAndRemoveInjections(ref string code, int charIndex)
         {
-            //need to work out where to call this from
             //also make it work recursively
             List<string> injections = new();
             charIndex++;
             int closebracketIndex;
-            while (code[charIndex] == Program.CODE_INJECTION_START_CHAR)
+            while (charIndex < code.Length && code[charIndex] == Program.CODE_INJECTION_START_CHAR)
             {
                 closebracketIndex = GetClosingBracketIndex(code, charIndex, Program.CODE_INJECTION_START_CHAR, Program.CODE_INJECTION_END_CHAR);
                 injections.Add(code.Substring(charIndex + 1, closebracketIndex - charIndex - 1));
+
                 code = code.Substring(0,charIndex) + code.Substring(closebracketIndex + 1);
+                
             }
             return injections;
         }
+
+        public static string Inject(string code, List<string> injections)
+        {
+            int index, closeCallIndex, injectionIndex;
+            while ((index = code.IndexOf(Program.CODE_INJECTION_CALL_START_CHAR)) != -1)
+            {
+                closeCallIndex = GetClosingBracketIndex(code, index, Program.CODE_INJECTION_CALL_START_CHAR, Program.CODE_INJECTION_CALL_END_CHAR);
+                if (!int.TryParse(code.AsSpan(index + 1, closeCallIndex - index -1), out injectionIndex)) throw new Exception("Injection index was not an int");
+
+                code = code.Substring(0,index) + injections[injectionIndex] + code.Substring(closeCallIndex + 1); //substitute
+            }
+            return code;
+        }
+
 
         public static int GetClosingBracketIndex(string code, int openBracketIndex, char startBracket, char endBracket)
         {
