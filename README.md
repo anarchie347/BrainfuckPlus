@@ -2,7 +2,7 @@
 
 I have done some brainfuck coding. It is painful (as it is meant to be)
 
-Brainfuck plus aims to keep the same mind hurting style as brainfuck as translates directly to brainfuck at runtime
+Brainfuck plus aims to keep the same mind hurting style as brainfuck and translates directly to brainfuck at runtime
 
 You can write code in brainfuck plus, then export it as regular brainfuck
 
