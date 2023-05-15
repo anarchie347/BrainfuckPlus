@@ -15,7 +15,7 @@ Because brainfuckplus is in development, below is a list of which features have 
 - Transpiling: Done
 - Methods: Done
 - Injections: Done
-- Shorthand repetition: Not done
+- Shorthand repetition: Done
 - Debug chars: Done
 - Comment: Done
 - Command line commands and interface and usability: Not done
