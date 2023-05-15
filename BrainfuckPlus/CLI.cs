@@ -41,7 +41,7 @@ namespace BrainfuckPlus
              * | increments a hidden counter then outputs its value (can be used to keep track of loops). This counter can only be accessed by this debug character
              * 
             */
-        public static void Parse(string[] args, out bool debug, out bool runOutput, out bool export, ObfuscationLevel obfuscation)
+        public static void Parse(string[] args, out bool debug, out bool runOutput, out bool export, out bool brainfuck, out bool preserveComments, out ObfuscationLevel obfuscation)
         {
             string fileAddress;
             string command;
@@ -49,12 +49,14 @@ namespace BrainfuckPlus
             debug= false;
             runOutput= false;
             export = false;
+            brainfuck= false;
+            preserveComments= false;
             obfuscation = ObfuscationLevel.None;
 
             if (args[0] == "?")
             {
                 Help();
-                return;
+                Environment.Exit(0);
             }
             //accounts for ommitting the command whe a file is opened with the program
             if (!new string[] { "transpile", "t", "export", "e", "run", "r" }.Contains(args[0]))
@@ -104,12 +106,47 @@ namespace BrainfuckPlus
             }
 
             debug = parameters.Contains("--debug") || parameters.Contains("-d");
-            
+            if (parameters.Contains("--obfuscate") || parameters.Contains("-o")) obfuscation = ObfuscationLevel.Normal;
+            if (parameters.Contains("--extreme") || parameters.Contains("-e")) obfuscation = ObfuscationLevel.Extreme;
+            brainfuck = parameters.Contains("--brainfuck") || parameters.Contains("-b");
+            preserveComments = parameters.Contains("--comments") || parameters.Contains("-c");
+
+
+            if (!File.Exists(fileAddress))
+                throw new Exception("File doesnt exist");
         }
 
         private static void Help()
         {
-            Console.WriteLine("HELP");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine("--------------");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Brainfuck Plus");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine("--------------");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Github: https://github.com/anarchie347/BrainfuckPlus");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("Commands:");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("run                        | transpiles to brainfuck and executes a given code file");
+            Console.WriteLine("transpile                  | transpiles to brainfuck and outputs a brainfuck file");
+            Console.WriteLine("export                     | finds all required methods, and compresses it to a zip file");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("Parameters:");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("--obfuscate,  -o           | Obfuscates the source code by adding random newline characters");
+            Console.WriteLine("--extremeobfuscate,  -e    | Obfuscates the source code by adding random newline characters and random characters");
+            Console.WriteLine("--debug,  -d               | Allows the use of debug characters. These features will likely not be supported on other brainfuck interpreters");
+            Console.WriteLine("--brainfuck,  -b           | Interprets the code as brainfuck, rather than brainfuck plus");
+            Console.WriteLine("--comments,  -c            | Preservers comments. Only available for transpile and export");
+
+
         }
     }
     public enum ObfuscationLevel { None, Normal, Extreme }

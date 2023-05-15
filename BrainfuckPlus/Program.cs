@@ -10,7 +10,9 @@ namespace BrainfuckPlus
         static void Main(string[] args)
         {
             string fileAddress;
-            if (args.Length > 0) CLI.Parse(args);
+            bool debug, runOutput, export, brainfuck, preserveComments;
+            ObfuscationLevel obfuscation;
+            if (args.Length > 0) CLI.Parse(args, out debug, out runOutput, out export, out brainfuck, out preserveComments, out obfuscation);
 
             string testCodeDirectory = AppDomain.CurrentDomain.BaseDirectory;
             // get the folder for test code
