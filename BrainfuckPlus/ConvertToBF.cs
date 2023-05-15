@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,10 +21,11 @@ namespace BrainfuckPlus
         }
         private static string ExpandRepetitions(string code)
         {
-            string newCode = string.Empty;
+            StringBuilder newCode = new();
             int j;
             string repetitionCounter;
-
+            int endInjectIndex;
+            string injectCall;
 
 
             for (int i = 0; i < code.Length; i++)
@@ -49,8 +51,22 @@ namespace BrainfuckPlus
                             throw new Exception("Oh no, there was no number for the shorthand repetition because it was not a number");
                         else if (code[j] == Syntax.REPETITION_CHAR)
                             throw new Exception("Oh no, there was no operater char at the end for the repetition because is was the repetition char");
+                        else if (code[j] == Syntax.CODE_INJECTION_CALL_START_CHAR)
+                        {
+                            endInjectIndex = GetClosingBracketIndex(code, j, Syntax.CODE_INJECTION_CALL_START_CHAR, Syntax.CODE_INJECTION_CALL_END_CHAR);
+                            injectCall = code.Substring(j, endInjectIndex - j + 1);
+                            StringBuilder sb = new();
+                            for (int k = 0; k < int.Parse(repetitionCounter); k++)
+                            {
+                                sb.Append(injectCall);
+                            }
+                            j = endInjectIndex;
+                            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                            newCode.Append(sb);
+                        }  
                         else
-                            newCode += new string(code[j], int.Parse(repetitionCounter));
+                            new string(code[j], int.Parse(repetitionCounter));
+
                     else if (repetitionCounter == string.Empty)
                         throw new Exception("Oh no, there was no number for the shorthand repetition because the end of the string was reached");
                     else
@@ -58,11 +74,11 @@ namespace BrainfuckPlus
                     i = j;
                 }
                 else
-                    newCode += code[i];
+                    newCode.Append(code[i]);
             }
-            return newCode;
+            return newCode.ToString();
         }
- 
+
 
         public static string RecursiveFindSubstitutions(string code, string methodNames, string directory, bool debugMode)
         {
@@ -85,6 +101,7 @@ namespace BrainfuckPlus
         {
             string codeToInsert;// = File.ReadAllText($"{directory}/{code[charIndex]}.{Program.FILE_EXTENSION}");
             codeToInsert = GetSourceCode.GetCode(GetSourceCode.GetAddress(code[charIndex], directory), debugMode, out string v);
+            codeToInsert = ExpandRepetitions(codeToInsert);
             if (injections != null) codeToInsert = Inject(codeToInsert, injections);
 
 
