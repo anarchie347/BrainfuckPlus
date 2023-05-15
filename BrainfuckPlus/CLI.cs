@@ -48,7 +48,7 @@ namespace BrainfuckPlus
             string[] parameters;
             debug= false;
             runOutput= false;
-            export= false;
+            export = false;
             obfuscation = ObfuscationLevel.None;
 
             if (args[0] == "?")
@@ -83,21 +83,28 @@ namespace BrainfuckPlus
                 case "run":
                 case "r":
                     //run
+                    runOutput = true;
+                    export = false;
                     break;
+                    
 
                 case "transpile":
                 case "t":
                     //transpile
+                    runOutput = false;
+                    export = false;
                     break;
 
                 case "export":
                 case "e":
                     //export
-                    break;
-
-                
+                    runOutput = false;
+                    export = false;
+                    break;     
             }
 
+            debug = parameters.Contains("--debug") || parameters.Contains("-d");
+            
         }
 
         private static void Help()
