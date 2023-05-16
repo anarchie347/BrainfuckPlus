@@ -27,15 +27,7 @@ namespace BrainfuckPlus
             return code;
         }
 
-        public static string? GetAddress(char chr, string directory)
-        {
-            //gets the first file it finds that starts with the corresponding character
-            bool nameCheck(string name) //check if the name begins with chr and is a .bfp file (only checked if the file has an extension, not all OSs enforce file extensions
-            {
-                return Path.GetFileNameWithoutExtension(name).StartsWith(chr) && (!Path.HasExtension(name) || (Path.GetExtension(name) == $".{Syntax.FILE_EXTENSION}"));
-            };
-            return Directory.GetFiles(directory).Where(name => nameCheck(name)).ToArray().FirstOrDefault();
-        }
+
 
         public static string GetAvailableMethodNames(string? address)
         {

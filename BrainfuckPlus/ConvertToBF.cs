@@ -79,6 +79,18 @@ namespace BrainfuckPlus
             return newCode.ToString();
         }
 
+        public static string? GetAddress(char chr, string directory)
+        {
+            //gets the first file it finds that starts with the corresponding character
+            bool nameCheck(string name) //check if the name begins with chr and is a .bfp file (only checked if the file has an extension, not all OSs enforce file extensions
+            {
+                return Path.GetFileNameWithoutExtension(name).StartsWith(chr) && (!Path.HasExtension(name) || (Path.GetExtension(name) == $".{Syntax.FILE_EXTENSION}"));
+            };
+            string[] paths = Directory.GetFiles(directory).Where(name => nameCheck(name)).ToArray();
+            if (paths.Length > 1) throw new Exception($"Ambiguous method call for {chr}");
+            if (paths.Length == 0) return null;
+            return paths[0];
+        }
 
         public static string RecursiveFindSubstitutions(string code, string methodNames, string directory, bool debugMode)
         {
@@ -100,7 +112,9 @@ namespace BrainfuckPlus
         public static string Substitute(string code, int charIndex, string methodNames, string directory, bool debugMode, List<string>? injections = null)
         {
             string codeToInsert;// = File.ReadAllText($"{directory}/{code[charIndex]}.{Program.FILE_EXTENSION}");
-            codeToInsert = GetSourceCode.GetCode(GetSourceCode.GetAddress(code[charIndex], directory), debugMode, out string v);
+            string? address = GetAddress(code[charIndex], directory);
+            if (address == null) return code.Remove(charIndex,1);
+            codeToInsert = GetSourceCode.GetCode(address, debugMode, out string v);
             codeToInsert = ExpandRepetitions(codeToInsert);
             if (injections != null) codeToInsert = Inject(codeToInsert, injections);
 
