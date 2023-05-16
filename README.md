@@ -2,15 +2,15 @@
 
 I have done some brainfuck coding. It is painful (as it is meant to be)
 
-Brainfuck plus aims to keep the same mind hurting style as brainfuck and translates directly to brainfuck at runtime
+BrainfuckPlus aims to keep the same mind hurting style as brainfuck and translates directly to brainfuck at runtime
 
-You can write code in brainfuck plus, then export it as regular brainfuck
+You can write code in brainfuck Plus, then export it as regular brainfuck
 
-I also plan to maybe make a brainfuck plus plus in the future, which deviates more from brainfuck, so wont easily transpile to brainfuck. A planned feature for brainfuck plus plus is functions which can have their own memory, separate to the memory of the program
+I also plan to maybe make a brainfuckPlusPlus in the future, which deviates more from brainfuck, so wont easily transpile to brainfuck. A planned feature for brainfuckPlusPlus is functions which can have their own memory, separate to the memory of the program
 
 ## Features
 
-Because brainfuckplus is in development, below is a list of which features have been implemented currently
+Because brainfuckPlus is in development, below is a list of which features have been implemented currently
 
 - Transpiling: Done
 - Methods: Done
@@ -46,7 +46,7 @@ These restrictions only apply to the first lettter of the filename because this 
 
 All methods that a programme uses must be in the same directory as the main code file (might add a way to make methods available for all projects later)
 
-At runtime, all methods calls are substituted with their corresponding brainfuck code, so **recursion is NOT possible** because it will cause a crash by endlessly substituting the method inside itself. This could be fixed by editing the interpreter, but this go against one of the main principles of brainfuck plus - it transpiles directly (and easily) to brainfuck
+At runtime, all methods calls are substituted with their corresponding brainfuck code, so **recursion is NOT possible** because it will cause a crash by endlessly substituting the method inside itself. This could be fixed by editing the interpreter, but this go against one of the main principles of brainfuckPlus - it transpiles directly (and easily) to brainfuck
 
 ### Code injections
 
@@ -109,7 +109,7 @@ All outputs from debug characters is outputted in magenta text and starts with *
 
 Comments in brainfuck are very easy unless you want to incude of `+-<>.,[]` in your comment
 
-Brainfuck plus has a dedicated comment character `/` indicating that everything after it on that line should be ignored
+BrainfuckPlus has a dedicated comment character `/` indicating that everything after it on that line should be ignored
 
 The comments character is not needed, youcan still add comments just by typing them regularly, but `/` allows you to use code characters after them.
 
