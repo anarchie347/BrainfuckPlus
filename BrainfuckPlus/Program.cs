@@ -12,7 +12,7 @@ namespace BrainfuckPlus
             string fileAddress;
             bool debug, runOutput, export, brainfuck, preserveComments;
             ObfuscationLevel obfuscation;
-            if (args.Length > 0) CLI.Parse(args, out debug, out runOutput, out export, out brainfuck, out preserveComments, out obfuscation);
+            CLI.Parse(args, out debug, out runOutput, out export, out brainfuck, out preserveComments, out obfuscation);
 
             string testCodeDirectory = AppDomain.CurrentDomain.BaseDirectory;
             // get the folder for test code
@@ -30,7 +30,8 @@ namespace BrainfuckPlus
             Console.WriteLine(bfcode);
 
             Console.ForegroundColor = ConsoleColor.Cyan;
-            BFInterpreter.Run(bfcode, false);
+            if (runOutput)
+                BFInterpreter.Run(bfcode, debug);
 
         }
 

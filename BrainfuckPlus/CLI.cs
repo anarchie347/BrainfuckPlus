@@ -53,7 +53,7 @@ namespace BrainfuckPlus
             preserveComments= false;
             obfuscation = ObfuscationLevel.None;
 
-            if (args[0] == "?")
+            if (args.Length == 0 || args[0] == "?")
             {
                 Help();
                 Environment.Exit(0);
