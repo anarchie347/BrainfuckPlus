@@ -33,21 +33,9 @@ namespace BrainfuckPlus
             if (runOutput)
                 BFInterpreter.Run(bfcode, debug);
                 
-
         }
 
-        static string? GetFileAddress()
-        {
-            string? FileAddress;
-            do
-            {
-                Console.WriteLine("Enter File address");
-                FileAddress = Console.ReadLine() ?? "";
-            } while (FileAddress.Length == 0 || !File.Exists(FileAddress));
-            return FileAddress.Length > 0 ? FileAddress.Replace('/', '\\') : null;
-            
-
-        }
+        
 
         
     }
