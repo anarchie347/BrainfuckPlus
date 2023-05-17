@@ -32,6 +32,7 @@ namespace BrainfuckPlus
             Console.ForegroundColor = ConsoleColor.Cyan;
             if (runOutput)
                 BFInterpreter.Run(bfcode, debug);
+                
 
         }
 
