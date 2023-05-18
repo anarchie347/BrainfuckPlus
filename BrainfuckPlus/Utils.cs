@@ -14,11 +14,24 @@ namespace BrainfuckPlus
             string input;
             if (File.Exists(defaultAddress))
             {
-                Console.WriteLine($"The file {defaultAddress} already exists");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("The file ");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write(defaultAddress);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(" already exists");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine($"Leave blank to overwrite it or enter a new file name: ");
             }
             else
-                Console.WriteLine($"Do you want to save the file as {defaultAddress}. Leave blank to confirm or enter a new name");
+            {
+                Console.Write($"Do you want to save the file as ");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write(defaultAddress);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("?\nLeave blank to confirm or enter a new name");
+
+            }
             input = Console.ReadLine() ?? string.Empty;
             if (input != string.Empty)
             {
