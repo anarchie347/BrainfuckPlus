@@ -41,17 +41,18 @@ namespace BrainfuckPlus
              * | increments a hidden counter then outputs its value (can be used to keep track of loops). This counter can only be accessed by this debug character
              * 
             */
-        public static void Parse(string[] args, out string fileAddress, out bool debug, out bool runOutput, out bool export, out bool brainfuck, out bool preserveComments, out ObfuscationLevel obfuscation)
+        public static ParsedOptions Parse(string[] args)//, out string fileAddress, out bool debug, out bool runOutput, out bool export, out bool brainfuck, out bool preserveComments, out ObfuscationLevel obfuscation)
         {
+            ParsedOptionsBuilder parsedOptionsBuilder = new();
             string command;
             string[] parameters;
-            fileAddress = string.Empty;
-            debug= false;
-            runOutput= false;
-            export = false;
-            brainfuck= false;
-            preserveComments= false;
-            obfuscation = ObfuscationLevel.None;
+            //fileAddress = string.Empty;
+            //debug= false;
+            //runOutput= false;
+            //export = false;
+            //brainfuck= false;
+            //preserveComments= false;
+            //obfuscation = ObfuscationLevel.None;
 
             if (args.Length == 0 || args[0] == "?")
             {
@@ -62,7 +63,7 @@ namespace BrainfuckPlus
             if (!new string[] { "transpile", "t", "export", "e", "run", "r" }.Contains(args[0]))
             {
                 command = "run";
-                fileAddress = args[0];
+                parsedOptionsBuilder.FileAddress = args[0];
                 parameters = new string[args.Length - 1];
                 for (int i = 1; i < parameters.Length; i++)
                 {
@@ -71,7 +72,7 @@ namespace BrainfuckPlus
             } else
             {
                 command = args[0];
-                fileAddress= args[1];
+                parsedOptionsBuilder.FileAddress = args[1];
                 parameters = new string[args.Length - 2];
                 for (int i = 2; i < parameters.Length; i++)
                 {
@@ -85,35 +86,37 @@ namespace BrainfuckPlus
                 case "run":
                 case "r":
                     //run
-                    runOutput = true;
-                    export = false;
+                    parsedOptionsBuilder.RunOutput = true;
+                    parsedOptionsBuilder.Export = false;
                     break;
                     
 
                 case "transpile":
                 case "t":
                     //transpile
-                    runOutput = false;
-                    export = false;
+                    parsedOptionsBuilder.RunOutput = false;
+                    parsedOptionsBuilder.Export = false;
                     break;
 
                 case "export":
                 case "e":
                     //export
-                    runOutput = false;
-                    export = false;
+                    parsedOptionsBuilder.RunOutput = false;
+                    parsedOptionsBuilder.Export = false;
                     break;     
             }
 
-            debug = parameters.Contains("--debug") || parameters.Contains("-d");
-            if (parameters.Contains("--obfuscate") || parameters.Contains("-o")) obfuscation = ObfuscationLevel.Normal;
-            if (parameters.Contains("--extreme") || parameters.Contains("-e")) obfuscation = ObfuscationLevel.Extreme;
-            brainfuck = parameters.Contains("--brainfuck") || parameters.Contains("-b");
-            preserveComments = parameters.Contains("--comments") || parameters.Contains("-c");
+            parsedOptionsBuilder.Debug = parameters.Contains("--debug") || parameters.Contains("-d");
+            if (parameters.Contains("--obfuscate") || parameters.Contains("-o")) parsedOptionsBuilder.Obfuscation = ObfuscationLevel.Normal;
+            if (parameters.Contains("--extreme") || parameters.Contains("-e")) parsedOptionsBuilder.Obfuscation = ObfuscationLevel.Extreme;
+            parsedOptionsBuilder.BrainfuckCode = parameters.Contains("--brainfuck") || parameters.Contains("-b");
+            parsedOptionsBuilder.PreserveComments = parameters.Contains("--comments") || parameters.Contains("-c");
 
 
-            if (!File.Exists(fileAddress))
+            if (!File.Exists(parsedOptionsBuilder.FileAddress))
                 throw new Exception("File doesnt exist");
+
+            return parsedOptionsBuilder.Build();
         }
 
         private static void Help()
@@ -148,6 +151,41 @@ namespace BrainfuckPlus
         }
     }
     public enum ObfuscationLevel { None, Normal, Extreme }
-   
 
+    public struct ParsedOptions
+    {
+        public string FileAddress;
+        public bool Debug;
+        public bool RunOutput;
+        public bool Export;
+        public bool BrainfuckCode;
+        public bool PreserveComments;
+        public ObfuscationLevel Obfuscation;
+        public ParsedOptions(string fileAddress, bool debug, bool runOutput, bool export, bool brainfuckCode, bool preserveComments, ObfuscationLevel obfuscation)
+        {
+            FileAddress = fileAddress;
+            Debug = debug;
+            RunOutput = runOutput;
+            Export = export;
+            BrainfuckCode = brainfuckCode;
+            PreserveComments = preserveComments;
+            Obfuscation = obfuscation;
+        }
+    }
+
+    public sealed class ParsedOptionsBuilder
+    {
+        public string FileAddress { get; set; }
+        public bool Debug { get; set; }
+        public bool RunOutput { get; set; }
+        public bool Export { get; set; }
+        public bool BrainfuckCode { get; set; }
+        public bool PreserveComments { get; set; }
+        public ObfuscationLevel Obfuscation { get; set; }
+
+        public ParsedOptions Build()
+        {
+            return new ParsedOptions(FileAddress, Debug, RunOutput, Export, BrainfuckCode, PreserveComments, Obfuscation);
+        }
+    }
 }
