@@ -9,6 +9,7 @@ namespace BrainfuckPlus
 
         static void Main(string[] args)
         {
+
             string fileAddress;
             bool debug, runOutput, export, brainfuck, preserveComments;
             ObfuscationLevel obfuscation;
