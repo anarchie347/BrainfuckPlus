@@ -1,8 +1,7 @@
 {
   "profiles": {
     "BrainfuckPlus": {
-      "commandName": "Project",
-      "commandLineArgs": "\r\n"
+      "commandName": "Project"
     }
   }
 }

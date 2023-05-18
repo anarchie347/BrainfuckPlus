@@ -41,11 +41,11 @@ namespace BrainfuckPlus
              * | increments a hidden counter then outputs its value (can be used to keep track of loops). This counter can only be accessed by this debug character
              * 
             */
-        public static void Parse(string[] args, out bool debug, out bool runOutput, out bool export, out bool brainfuck, out bool preserveComments, out ObfuscationLevel obfuscation)
+        public static void Parse(string[] args, out string fileAddress, out bool debug, out bool runOutput, out bool export, out bool brainfuck, out bool preserveComments, out ObfuscationLevel obfuscation)
         {
-            string fileAddress;
             string command;
             string[] parameters;
+            fileAddress = string.Empty;
             debug= false;
             runOutput= false;
             export = false;
@@ -145,10 +145,9 @@ namespace BrainfuckPlus
             Console.WriteLine("--debug,  -d               | Allows the use of debug characters. These features will likely not be supported on other brainfuck interpreters");
             Console.WriteLine("--brainfuck,  -b           | Interprets the code as brainfuck, rather than brainfuck plus");
             Console.WriteLine("--comments,  -c            | Preservers comments. Only available for transpile and export");
-
-
         }
     }
     public enum ObfuscationLevel { None, Normal, Extreme }
    
+
 }
