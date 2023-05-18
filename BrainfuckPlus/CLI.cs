@@ -59,7 +59,7 @@ namespace BrainfuckPlus
                 Help();
                 Environment.Exit(0);
             }
-            //accounts for ommitting the command whe a file is opened with the program
+            //accounts for ommitting the command when a file is opened with the program
             if (!new string[] { "transpile", "t", "export", "e", "run", "r" }.Contains(args[0]))
             {
                 command = "run";
@@ -69,7 +69,12 @@ namespace BrainfuckPlus
                 {
                     parameters[i] = args[i + 1];
                 }
-            } else
+            }
+            else if (args.Length == 1) //only command, no file address
+            {
+                throw new Exception("No file address given");
+            }
+            else
             {
                 command = args[0];
                 parsedOptionsBuilder.FileAddress = args[1];
