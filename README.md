@@ -18,7 +18,7 @@ Because brainfuckPlus is in development, below is a list of which features have 
 - Shorthand repetition: Done
 - Debug chars: Done
 - Comment: Done
-- Command line commands and interface and usability: Not done
+- Command line commands and interface and usability: Working on it
 
 ### Transpiles to brainfuck
 
