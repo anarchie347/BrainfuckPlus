@@ -12,13 +12,23 @@ namespace BrainfuckPlus
             ParsedOptions options = new ParsedOptions();
             options = CLI.Parse(args);
 
-            string testCodeDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            //string testCodeDirectory = AppDomain.CurrentDomain.BaseDirectory;
             // get the folder for test code
             //test code is in this folder so it is tracked by git, so it can be used when cloning the repo
-            testCodeDirectory = Directory.GetParent(testCodeDirectory).Parent.Parent.Parent.Parent.ToString() + "\\testcode";
-            Console.WriteLine(testCodeDirectory);
-            string methodNames;
+            //testCodeDirectory = Directory.GetParent(testCodeDirectory).Parent.Parent.Parent.Parent.ToString() + "\\testcode";
             //fileAddress = $"{testCodeDirectory}\\main.bfp";//GetFileAddress();
+
+            string methodNames;
+            if (options.Export)
+            {
+                foreach (string item in Export.GetFileAddresses(options.FileAddress))
+                {
+                    Console.WriteLine(item);
+                }
+                Console.WriteLine("as");
+                Console.ReadKey();
+                return;
+            }
             string bfpcode = GetSourceCode.GetCode(options.FileAddress, true, out methodNames);
 
             string bfcode = ConvertToBF.Convert(bfpcode, methodNames, options.FileAddress, true);
