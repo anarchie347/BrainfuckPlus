@@ -36,9 +36,9 @@ Methods are replaced with their regular brainfuck code when executing
 
 Methods are written in brainfuck, in a file called `something.bfp`, and the character used to call the method is the first character
 
-Method names have some restrictions. THey cannot use any brainfuck characters `[],.+-<>`, any of the debug chars `\\:?"|` , the comment char `/`, the code injection start end end chars `{}` the repetition char `*`, the characters used for calling injected code `()` or any numbers `0123456789`
+Method names have some restrictions. THey cannot use any brainfuck characters `[],.+-<>`, any of the debug chars `\\:?"|` , the comment char `/`, the code injection start end end chars `{}` the repetition char `*`, the characters used for calling injected code `()`, any numbers `0123456789` or whitespace
 
-Hence the list of dissallowed characters is `[],.+-<>\\:?"|/{}*()0123456789`
+Hence the list of disallowed characters is `[],.+-<>\\:?"|/{}*()0123456789` and whitespaces
 
 Some of these characters may change in the future, but they are not planned to change
 
