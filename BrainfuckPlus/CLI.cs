@@ -107,7 +107,7 @@ namespace BrainfuckPlus
                 case "e":
                     //export
                     parsedOptionsBuilder.RunOutput = false;
-                    parsedOptionsBuilder.Export = false;
+                    parsedOptionsBuilder.Export = true;
                     break;     
             }
 
