@@ -32,7 +32,7 @@ namespace BrainfuckPlus
                 {
                     if (code[i][j] == Syntax.COMMENT_CHAR)
                         break;
-                    if (!(Syntax.EXTRA_ALLOWED_CHARS.Contains(code[i][j]) || Syntax.BF_VALID_CHARS.Contains(code[i][j])))
+                    if (!(Syntax.EXTRA_ALLOWED_CHARS.Contains(code[i][j]) || Syntax.BF_VALID_CHARS.Contains(code[i][j]) || char.IsWhiteSpace(code[i][j])))
                     {
                         methodpath = ConvertToBF.GetAddress(code[i][j], Path.GetDirectoryName(address));
                         if (methodpath != null && !paths.Contains(methodpath))

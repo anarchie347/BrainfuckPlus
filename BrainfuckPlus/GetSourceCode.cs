@@ -37,6 +37,7 @@ namespace BrainfuckPlus
             string[] fileNames;
             fileNames = Directory.GetFiles(address);
             fileNames = fileNames.Where(name => Path.GetExtension(name) == $".{Syntax.FILE_EXTENSION}").ToArray();
+            fileNames = fileNames.Where(name => !char.IsWhiteSpace(name[0])).ToArray();
             fileNames = fileNames.Select(name => Path.GetFileNameWithoutExtension(name)).ToArray();
             string fileFirstChars = "";
             for (int i = 0; i < fileNames.Length; i++)
