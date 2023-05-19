@@ -36,9 +36,8 @@ namespace BrainfuckPlus
                 return "";
             string[] fileNames;
             fileNames = Directory.GetFiles(address);
-            fileNames = fileNames.Where(name => name.EndsWith('.' + Syntax.FILE_EXTENSION)).ToArray();
-            fileNames = fileNames.Select(name => name[..^4]).ToArray(); //remove file extension
-            fileNames = fileNames.Select(name => Path.GetFileName(name)).ToArray(); //remove directory to just leave filename
+            fileNames = fileNames.Where(name => Path.GetExtension(name) == $".{Syntax.FILE_EXTENSION}").ToArray();
+            fileNames = fileNames.Select(name => Path.GetFileNameWithoutExtension(name)).ToArray();
             string fileFirstChars = "";
             for (int i = 0; i < fileNames.Length; i++)
                 fileFirstChars += fileNames[i][0];
