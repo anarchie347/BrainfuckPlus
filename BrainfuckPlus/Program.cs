@@ -3,14 +3,11 @@ namespace BrainfuckPlus
 {
     internal class Program
     {
-
-
-        
-
         static void Main(string[] args)
         {
-            ParsedOptions options = new ParsedOptions();
-            options = CLI.Parse(args);
+            string methodNames;
+            ParsedOptions options = CLI.Parse(args);
+            
 
             //string testCodeDirectory = AppDomain.CurrentDomain.BaseDirectory;
             // get the folder for test code
@@ -18,17 +15,23 @@ namespace BrainfuckPlus
             //testCodeDirectory = Directory.GetParent(testCodeDirectory).Parent.Parent.Parent.Parent.ToString() + "\\testcode";
             //fileAddress = $"{testCodeDirectory}\\main.bfp";//GetFileAddress();
 
-            string methodNames;
+            
             if (options.Export)
             {
                 Export.CreateCompressedFile(options.FileAddress, options.RemoveComments);
                 Console.ReadKey();
                 return;
             }
-            string bfpcode = GetSourceCode.GetCode(options.FileAddress, true, out methodNames);
+            if (options.BrainfuckCode)
+            {
+                string code = File.ReadAllText(options.FileAddress);
+                BFInterpreter.Run(code, true);
+                return;
+            }
+            string sourcecode = GetSourceCode.GetCode(options.FileAddress, true, out methodNames);
 
-            string bfcode = ConvertToBF.Convert(bfpcode, methodNames, options.FileAddress, true);
-            Console.WriteLine(bfpcode);
+            string bfcode = ConvertToBF.Convert(sourcecode, methodNames, options.FileAddress, true);
+            Console.WriteLine(sourcecode);
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine(bfcode);
