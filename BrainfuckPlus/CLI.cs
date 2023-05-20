@@ -173,7 +173,7 @@ namespace BrainfuckPlus
             Console.WriteLine("Parameter                  | Value type  | Valid commands     | Explanation");
             Console.WriteLine("---------------------------+-------------+--------------------+------------------------------------");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("--name=value               | string      | transpile, export  | File path (absolute or relative) for the outputted zip/bf file (do not include file extension)"); //not implemented
+            Console.WriteLine("--name=value               | string      | transpile, export  | File path (absolute or relative) for the outputted zip/bf file (do not include file extension)"); //implemented
 
         }
     }
