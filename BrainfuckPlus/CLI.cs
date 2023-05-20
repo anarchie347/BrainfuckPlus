@@ -133,11 +133,11 @@ namespace BrainfuckPlus
             Console.WriteLine("Command                    | Explanation");
             Console.WriteLine("---------------------------+------------------------------------");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("run, r                     | transpiles to brainfuck and executes a given code file");
-            Console.WriteLine("transpile, t               | transpiles to brainfuck and outputs a brainfuck file");
-            Console.WriteLine("export, e                  | finds all required methods, and compresses them to a zip file");
-            Console.WriteLine("modify, m                  | applies given parameter operations to all files in a directory or used by a file");
-            Console.WriteLine("help, ?                    | show this menu");
+            Console.WriteLine("run, r                     | transpiles to brainfuck and executes a given code file"); //implemented
+            Console.WriteLine("transpile, t               | transpiles to brainfuck and outputs a brainfuck file"); //implemented
+            Console.WriteLine("export, e                  | finds all required methods, and compresses them to a zip file"); //mostly implemented
+            Console.WriteLine("modify, m                  | applies given parameter operations to all files in a directory or used by a file"); //not implemented
+            Console.WriteLine("help, ?                    | show this menu"); //implemented
             Console.WriteLine("");
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Magenta;
@@ -146,12 +146,12 @@ namespace BrainfuckPlus
             Console.WriteLine("Flag                       | Valid commands             | Explanation");
             Console.WriteLine("---------------------------+--------------------+------------------------------------");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("--obfuscate,  -o           | transpile, export, modify  | Obfuscates the source code by adding random newline characters");
-            Console.WriteLine("--extremeobfuscate,  -e    | transpile, export, modify  | Obfuscates the source code by adding random newline characters and random characters");
-            Console.WriteLine("--debug,  -d               | transpile, run             | Allows the use of debug characters. These features will likely not be supported on other brainfuck interpreters");
-            Console.WriteLine("--brainfuck,  -bf          | run                        | Interprets the code as brainfuck, rather than brainfuck plus");
-            Console.WriteLine("--removecomments,  -rc     | export, modify             | Removes comments on exported code");
-            Console.WriteLine("--shortenmethodnames, -sm  | modify                     | Shortens all method names to only the first character");
+            Console.WriteLine("--obfuscate,  -o           | transpile, export, modify  | Obfuscates the source code by adding random newline characters"); //not implemented
+            Console.WriteLine("--extremeobfuscate,  -e    | transpile, export, modify  | Obfuscates the source code by adding random newline characters and random characters"); //not implemented
+            Console.WriteLine("--debug,  -d               | transpile, run             | Allows the use of debug characters. These features will likely not be supported on other brainfuck interpreters"); //mostly implemenmted (only for the actual interpreter)
+            Console.WriteLine("--brainfuck,  -bf          | run                        | Interprets the code as brainfuck, rather than brainfuck plus"); //not implemented
+            Console.WriteLine("--removecomments,  -rc     | export, modify             | Removes comments on exported code"); //implemented
+            Console.WriteLine("--shortenmethodnames, -sm  | modify                     | Shortens all method names to only the first character"); //not implemented
             Console.WriteLine("");
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Magenta;
@@ -160,7 +160,7 @@ namespace BrainfuckPlus
             Console.WriteLine("Parameter                  | Value type  | Valid commands     | Explanation");
             Console.WriteLine("---------------------------+-------------+--------------------+------------------------------------");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("--name=value               | string      | transpile, export  | Gives the outputted bf/zip file a certain name");
+            Console.WriteLine("--name=value               | string      | transpile, export  | Gives the outputted bf/zip file a certain name"); //not implemented
 
         }
     }
