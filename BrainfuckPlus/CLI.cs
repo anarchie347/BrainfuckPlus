@@ -12,25 +12,15 @@ namespace BrainfuckPlus
     {
         /*Options
              * 
-             * transpile - transpile and output as a file
-             * run - transpile, run without debug characters enabled
-             * export - compresses the file and all other needed files into a .zip so it can be sent easily
-             * ? - display help
+             * transpile, t - transpile and output as a file
+             * run, r - transpile, run without debug characters enabled
+             * export, e - compresses the file and all other needed files into a .zip so it can be sent easily
+             * help, ? - display help
              * 
              * 
              * the file path should follow the option
              * if the file path is after the main command and their is no option (like if the file was opened) do the equivalent of run
              * 
-             * Extra parameters:
-             * 
-             * --obfuscate, -o
-             * Obsfuscates the output by putting random new lines
-             * 
-             * --extremeobfuscate, -e
-             * does regular obfuscate, but also adds lots of random, unnescessary characters
-             * 
-             * --debug, -d
-             * Allow debug characters
              * 
              * 
              * Debug chars:
@@ -41,7 +31,7 @@ namespace BrainfuckPlus
              * | increments a hidden counter then outputs its value (can be used to keep track of loops). This counter can only be accessed by this debug character
              * 
             */
-        public static ParsedOptions Parse(string[] args)//, out string fileAddress, out bool debug, out bool runOutput, out bool export, out bool brainfuck, out bool preserveComments, out ObfuscationLevel obfuscation)
+        public static ParsedOptions Parse(string[] args)//, out string fileAddress, out bool debug, out bool runOutput, out bool export, out bool brainfuck, out bool removeComments, out ObfuscationLevel obfuscation)
         {
             ParsedOptionsBuilder parsedOptionsBuilder = new();
             string command;
@@ -51,10 +41,10 @@ namespace BrainfuckPlus
             //runOutput= false;
             //export = false;
             //brainfuck= false;
-            //preserveComments= false;
+            //removeComments= false;
             //obfuscation = ObfuscationLevel.None;
 
-            if (args.Length == 0 || args[0] == "?")
+            if (args.Length == 0 || args[0] == "?" || args[0] == "help")
             {
                 Help();
                 Environment.Exit(0);
@@ -115,7 +105,7 @@ namespace BrainfuckPlus
             if (parameters.Contains("--obfuscate") || parameters.Contains("-o")) parsedOptionsBuilder.Obfuscation = ObfuscationLevel.Normal;
             if (parameters.Contains("--extreme") || parameters.Contains("-e")) parsedOptionsBuilder.Obfuscation = ObfuscationLevel.Extreme;
             parsedOptionsBuilder.BrainfuckCode = parameters.Contains("--brainfuck") || parameters.Contains("-b");
-            parsedOptionsBuilder.PreserveComments = parameters.Contains("--comments") || parameters.Contains("-c");
+            parsedOptionsBuilder.RemoveComments = parameters.Contains("--removecomments") || parameters.Contains("-rc");
 
 
             if (!File.Exists(parsedOptionsBuilder.FileAddress))
@@ -139,20 +129,37 @@ namespace BrainfuckPlus
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("Commands:");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Command                    | Explanation");
+            Console.WriteLine("---------------------------+------------------------------------");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("run                        | transpiles to brainfuck and executes a given code file");
-            Console.WriteLine("transpile                  | transpiles to brainfuck and outputs a brainfuck file");
-            Console.WriteLine("export                     | finds all required methods, and compresses it to a zip file");
+            Console.WriteLine("run, r                     | transpiles to brainfuck and executes a given code file");
+            Console.WriteLine("transpile, t               | transpiles to brainfuck and outputs a brainfuck file");
+            Console.WriteLine("export, e                  | finds all required methods, and compresses them to a zip file");
+            Console.WriteLine("help, ?                    | show this menu");
             Console.WriteLine("");
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("Parameters:");
+            Console.WriteLine("Flags:");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Flag                       | Valid commands     | Explanation");
+            Console.WriteLine("---------------------------+--------------------+------------------------------------");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("--obfuscate,  -o           | Obfuscates the source code by adding random newline characters");
-            Console.WriteLine("--extremeobfuscate,  -e    | Obfuscates the source code by adding random newline characters and random characters");
-            Console.WriteLine("--debug,  -d               | Allows the use of debug characters. These features will likely not be supported on other brainfuck interpreters");
-            Console.WriteLine("--brainfuck,  -b           | Interprets the code as brainfuck, rather than brainfuck plus");
-            Console.WriteLine("--comments,  -c            | Preservers comments. Only available for transpile and export");
+            Console.WriteLine("--obfuscate,  -o           | transpile, export  | Obfuscates the source code by adding random newline characters");
+            Console.WriteLine("--extremeobfuscate,  -e    | transpile          | Obfuscates the source code by adding random newline characters and random characters");
+            Console.WriteLine("--debug,  -d               | transpile, run     | Allows the use of debug characters. These features will likely not be supported on other brainfuck interpreters");
+            Console.WriteLine("--brainfuck,  -bf          | run                | Interprets the code as brainfuck, rather than brainfuck plus");
+            Console.WriteLine("--removecomments,  -rc     | export             | Removes comments on exported code");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("Value Parameters:");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Parameter                  | Value type  | Valid commands     | Explanation");
+            Console.WriteLine("---------------------------+-------------+--------------------+------------------------------------");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("--name=value               | string      | transpile, export  | Gives the outputted bf/zip file a certain name");
+
         }
     }
     public enum ObfuscationLevel { None, Normal, Extreme }
@@ -164,16 +171,16 @@ namespace BrainfuckPlus
         public bool RunOutput;
         public bool Export;
         public bool BrainfuckCode;
-        public bool PreserveComments;
+        public bool RemoveComments;
         public ObfuscationLevel Obfuscation;
-        public ParsedOptions(string fileAddress, bool debug, bool runOutput, bool export, bool brainfuckCode, bool preserveComments, ObfuscationLevel obfuscation)
+        public ParsedOptions(string fileAddress, bool debug, bool runOutput, bool export, bool brainfuckCode, bool removeComments, ObfuscationLevel obfuscation)
         {
             FileAddress = fileAddress;
             Debug = debug;
             RunOutput = runOutput;
             Export = export;
             BrainfuckCode = brainfuckCode;
-            PreserveComments = preserveComments;
+            RemoveComments = removeComments;
             Obfuscation = obfuscation;
         }
     }
@@ -185,12 +192,12 @@ namespace BrainfuckPlus
         public bool RunOutput { get; set; }
         public bool Export { get; set; }
         public bool BrainfuckCode { get; set; }
-        public bool PreserveComments { get; set; }
+        public bool RemoveComments { get; set; }
         public ObfuscationLevel Obfuscation { get; set; }
 
         public ParsedOptions Build()
         {
-            return new ParsedOptions(FileAddress, Debug, RunOutput, Export, BrainfuckCode, PreserveComments, Obfuscation);
+            return new ParsedOptions(FileAddress, Debug, RunOutput, Export, BrainfuckCode, RemoveComments, Obfuscation);
         }
     }
 }
