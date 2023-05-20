@@ -148,8 +148,8 @@ namespace BrainfuckPlus
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("--obfuscate,  -o           | transpile, export, modify  | Obfuscates the source code by adding random newline characters"); //not implemented
             Console.WriteLine("--extremeobfuscate,  -e    | transpile, export, modify  | Obfuscates the source code by adding random newline characters and random characters"); //not implemented
-            Console.WriteLine("--debug,  -d               | transpile, run             | Allows the use of debug characters. These features will likely not be supported on other brainfuck interpreters"); //mostly implemenmted (only for the actual interpreter)
-            Console.WriteLine("--brainfuck,  -bf          | run                        | Interprets the code as brainfuck, rather than brainfuck plus"); //not implemented
+            Console.WriteLine("--debug,  -d               | transpile, run             | Allows the use of debug characters. These features will likely not be supported on other brainfuck interpreters"); //implemented
+            Console.WriteLine("--brainfuck,  -bf          | run                        | Interprets the code as brainfuck, rather than brainfuckplus"); //implemented
             Console.WriteLine("--removecomments,  -rc     | export, modify             | Removes comments on exported code"); //implemented
             Console.WriteLine("--shortenmethodnames, -sm  | modify                     | Shortens all method names to only the first character"); //not implemented
             Console.WriteLine("");

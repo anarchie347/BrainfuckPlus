@@ -28,13 +28,8 @@ namespace BrainfuckPlus
                 BFInterpreter.Run(code, true);
                 return;
             }
-            string sourcecode = GetSourceCode.GetCode(options.FileAddress, true, out methodNames);
-
-            string bfcode = ConvertToBF.Convert(sourcecode, methodNames, options.FileAddress, true);
-            Console.WriteLine(sourcecode);
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine(bfcode);
+            string sourcecode = GetSourceCode.GetCode(options.FileAddress, options.Debug, out methodNames);
+            string bfcode = ConvertToBF.Convert(sourcecode, methodNames, options.FileAddress, options.Debug);
 
             Console.ForegroundColor = ConsoleColor.Cyan;
             if (options.RunOutput)
