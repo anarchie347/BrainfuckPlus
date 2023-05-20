@@ -25,6 +25,8 @@ namespace BrainfuckPlus
                 {
                     File.Copy(path, Path.Combine(tempDir, Path.GetFileName(path)));
                 }
+                if (removeComments)
+                    RemoveChars(paths.Select(p => Path.Combine(tempDir, Path.GetFileName(p))).ToArray());
                 ZipFile.CreateFromDirectory(tempDir, Path.Combine(Directory.GetParent(tempDir).ToString(), $"bfp_Program_{currentDateTime}.zip"));
                 Console.WriteLine("Zip file successfully created");
             }
@@ -74,6 +76,27 @@ namespace BrainfuckPlus
             }
 
             return paths;
+        }
+
+        private static void RemoveChars(string[] paths)
+        {
+            Console.WriteLine("ASD");
+            char[] methods = Array.ConvertAll(paths, p => Path.GetFileName(p)[0]);
+            string temp;
+            StringBuilder sb;
+            foreach (string path in paths)
+            {
+                temp = File.ReadAllText(path);
+                sb = new StringBuilder();
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    if (methods.Contains(temp[i]) || (Syntax.EXTRA_ALLOWED_CHARS.Contains(temp[i]) && Syntax.COMMENT_CHAR != temp[i]) || Syntax.BF_VALID_CHARS.Contains(temp[i]) || char.IsWhiteSpace(temp[i]))
+                    {
+                        sb.Append(temp[i]);
+                    }
+                }
+                File.WriteAllText(path, sb.ToString());
+            }
         }
 
     }

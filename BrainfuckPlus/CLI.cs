@@ -68,10 +68,10 @@ namespace BrainfuckPlus
             {
                 command = args[0];
                 parsedOptionsBuilder.FileAddress = args[1];
-                parameters = new string[args.Length - 2];
-                for (int i = 2; i < parameters.Length; i++)
+                parameters = new string[args.Length - 1];
+                for (int i = 2; i < args.Length; i++)
                 {
-                    parameters[i] = args[i + 2];
+                    parameters[i - 2] = args[i];
                 }
             }
             
@@ -106,7 +106,7 @@ namespace BrainfuckPlus
             if (parameters.Contains("--extreme") || parameters.Contains("-e")) parsedOptionsBuilder.Obfuscation = ObfuscationLevel.Extreme;
             parsedOptionsBuilder.BrainfuckCode = parameters.Contains("--brainfuck") || parameters.Contains("-b");
             parsedOptionsBuilder.RemoveComments = parameters.Contains("--removecomments") || parameters.Contains("-rc");
-
+            Console.WriteLine("extra param1: " + parameters[0]);
 
             if (!File.Exists(parsedOptionsBuilder.FileAddress))
                 throw new Exception("File doesnt exist");
