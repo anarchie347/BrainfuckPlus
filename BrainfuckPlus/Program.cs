@@ -21,11 +21,7 @@ namespace BrainfuckPlus
             string methodNames;
             if (options.Export)
             {
-                foreach (string item in Export.GetFileAddresses(options.FileAddress))
-                {
-                    Console.WriteLine(item);
-                }
-                Console.WriteLine("as");
+                Export.CreateCompressedFile(options.FileAddress, options.PreserveComments);
                 Console.ReadKey();
                 return;
             }

@@ -50,5 +50,10 @@ namespace BrainfuckPlus
             sw.Close();
 
         }
+
+        public static string ToFileDateFormat(this DateTime time)
+        {
+            return time.ToString("yyyy-MM-dd_HH-mm-ss");
+        }
     }
 }

@@ -4,12 +4,40 @@ using System.Diagnostics.SymbolStore;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO.Compression;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BrainfuckPlus
 {
     internal class Export
     {
-        public static string[] GetFileAddresses(string address)
+        public static void CreateCompressedFile(string address, bool preserveComments)
+        {
+            string[] paths = GetFileAddresses(address);
+            string currentDateTime = DateTime.Now.ToFileDateFormat();
+            Path.GetTempFileName();
+            string tempDir = Path.Combine(Path.GetDirectoryName(address),$"bfcompressiontemp_{currentDateTime}");
+            try
+            {
+
+                Directory.CreateDirectory(tempDir);
+                foreach (string path in paths)
+                {
+                    File.Copy(path, Path.Combine(tempDir, Path.GetFileName(path)));
+                }
+                ZipFile.CreateFromDirectory(tempDir, Path.Combine(Directory.GetParent(tempDir).ToString(), $"bfp_Program_{currentDateTime}.zip"));
+                Console.WriteLine("Zip file successfully created");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                Directory.Delete(tempDir, true);
+            }
+        }
+        private static string[] GetFileAddresses(string address)
         {
             List<string> paths = RecursiveGetFiles(address);
             List<string> pathsNoDuplicates = new();
