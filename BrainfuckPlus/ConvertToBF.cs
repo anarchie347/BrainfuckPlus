@@ -99,7 +99,7 @@ namespace BrainfuckPlus
             {
                 if (methodNames.Contains(code[i]))
                 {
-                    if (code[i + 1] == Syntax.CODE_INJECTION_START_CHAR)
+                    if ( i < (code.Length - 1) && code[i + 1] == Syntax.CODE_INJECTION_START_CHAR)
                         injections = GetAndRemoveInjections(ref code, i);
                     else
                         injections = null;
