@@ -18,7 +18,7 @@ namespace BrainfuckPlus
             
             if (options.Export)
             {
-                Export.CreateCompressedFile(options.FileAddress, options.RemoveComments);
+                Export.CreateCompressedFile(options.FileAddress, options.RemoveComments, options.OutputPath);
                 Console.ReadKey();
                 return;
             }
@@ -31,12 +31,27 @@ namespace BrainfuckPlus
             string sourcecode = GetSourceCode.GetCode(options.FileAddress, options.Debug, out methodNames);
             string bfcode = ConvertToBF.Convert(sourcecode, methodNames, options.FileAddress, options.Debug);
 
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            if (!options.RunOutput)
+            {
+                string outputPath;
+                if (string.IsNullOrEmpty(options.OutputPath))
+                    outputPath = options.FileAddress;
+                else if (Path.IsPathRooted(options.OutputPath))
+                    outputPath = options.FileAddress;
+                else
+                    outputPath = Path.Combine(Path.GetDirectoryName(options.FileAddress), options.OutputPath);
+
+                outputPath = Path.ChangeExtension(outputPath, "bf");
+                Utils.WriteToFile(outputPath, "bf", bfcode);
+            }
+
             if (options.RunOutput)
-                BFInterpreter.Run(bfcode, options.Debug);
-            else
-                Utils.WriteToFile(Path.ChangeExtension(options.FileAddress, "bf"), "bf", bfcode);
+            {
                 
+                BFInterpreter.Run(bfcode, options.Debug);
+                return;
+            }
+
         }
 
         

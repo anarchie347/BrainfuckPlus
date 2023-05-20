@@ -55,7 +55,7 @@ namespace BrainfuckPlus
                 command = "run";
                 parsedOptionsBuilder.FileAddress = args[0];
                 parameters = new string[args.Length - 1];
-                for (int i = 1; i < parameters.Length; i++)
+                for (int i = 0; i < parameters.Length; i++)
                 {
                     parameters[i] = args[i + 1];
                 }
@@ -68,10 +68,10 @@ namespace BrainfuckPlus
             {
                 command = args[0];
                 parsedOptionsBuilder.FileAddress = args[1];
-                parameters = new string[args.Length - 1];
-                for (int i = 2; i < args.Length; i++)
+                parameters = new string[args.Length - 2];
+                for (int i = 0; i < parameters.Length; i++)
                 {
-                    parameters[i - 2] = args[i];
+                    parameters[i] = args[i + 2];
                 }
             }
             
@@ -102,11 +102,24 @@ namespace BrainfuckPlus
             }
 
             parsedOptionsBuilder.Debug = parameters.Contains("--debug") || parameters.Contains("-d");
-            if (parameters.Contains("--obfuscate") || parameters.Contains("-o")) parsedOptionsBuilder.Obfuscation = ObfuscationLevel.Normal;
-            if (parameters.Contains("--extreme") || parameters.Contains("-e")) parsedOptionsBuilder.Obfuscation = ObfuscationLevel.Extreme;
+
+            if (parameters.Contains("--obfuscate") || parameters.Contains("-o"))
+                parsedOptionsBuilder.Obfuscation = ObfuscationLevel.Normal;
+
+            if (parameters.Contains("--extreme") || parameters.Contains("-e"))
+                parsedOptionsBuilder.Obfuscation = ObfuscationLevel.Extreme;
+
             parsedOptionsBuilder.BrainfuckCode = parameters.Contains("--brainfuck") || parameters.Contains("-b");
+
             parsedOptionsBuilder.RemoveComments = parameters.Contains("--removecomments") || parameters.Contains("-rc");
-            Console.WriteLine("extra param1: " + parameters[0]);
+
+            parsedOptionsBuilder.OutputPath = string.Empty;
+            for (int i = 0; i < parameters.Length; i++)
+                if (parameters[i].StartsWith("--name="))
+                    if (parsedOptionsBuilder.OutputPath == string.Empty)
+                        parsedOptionsBuilder.OutputPath = parameters[i].Substring(7);
+                    else
+                        throw new Exception("Two output paths given");
 
             if (!File.Exists(parsedOptionsBuilder.FileAddress))
                 throw new Exception("File doesnt exist");
@@ -160,7 +173,7 @@ namespace BrainfuckPlus
             Console.WriteLine("Parameter                  | Value type  | Valid commands     | Explanation");
             Console.WriteLine("---------------------------+-------------+--------------------+------------------------------------");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("--name=value               | string      | transpile, export  | Gives the outputted bf/zip file a certain name"); //not implemented
+            Console.WriteLine("--name=value               | string      | transpile, export  | File path (absolute or relative) for the outputted zip/bf file (do not include file extension)"); //not implemented
 
         }
     }
@@ -174,8 +187,9 @@ namespace BrainfuckPlus
         public bool Export { get; init; }
         public bool BrainfuckCode { get; init; }
         public bool RemoveComments { get; init; }
+        public string OutputPath { get; init; }
         public ObfuscationLevel Obfuscation { get; init; }
-        public ParsedOptions(string fileAddress, bool debug, bool runOutput, bool export, bool brainfuckCode, bool removeComments, ObfuscationLevel obfuscation)
+        public ParsedOptions(string fileAddress, bool debug, bool runOutput, bool export, bool brainfuckCode, bool removeComments, string outputPath, ObfuscationLevel obfuscation)
         {
             FileAddress = fileAddress;
             Debug = debug;
@@ -183,6 +197,7 @@ namespace BrainfuckPlus
             Export = export;
             BrainfuckCode = brainfuckCode;
             RemoveComments = removeComments;
+            OutputPath = outputPath;
             Obfuscation = obfuscation;
         }
     }
@@ -195,11 +210,12 @@ namespace BrainfuckPlus
         public bool Export { get; set; }
         public bool BrainfuckCode { get; set; }
         public bool RemoveComments { get; set; }
+        public string OutputPath { get; set; }
         public ObfuscationLevel Obfuscation { get; set; }
 
         public ParsedOptions Build()
         {
-            return new ParsedOptions(FileAddress, Debug, RunOutput, Export, BrainfuckCode, RemoveComments, Obfuscation);
+            return new ParsedOptions(FileAddress, Debug, RunOutput, Export, BrainfuckCode, RemoveComments, OutputPath, Obfuscation);
         }
     }
 }

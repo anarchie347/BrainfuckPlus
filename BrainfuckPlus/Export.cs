@@ -11,12 +11,12 @@ namespace BrainfuckPlus
 {
     internal class Export
     {
-        public static void CreateCompressedFile(string address, bool removeComments)
+        public static void CreateCompressedFile(string address, bool removeComments, string? outputName = null)
         {
             string[] paths = GetFileAddresses(address);
             string currentDateTime = DateTime.Now.ToFileDateFormat();
-            Path.GetTempFileName();
             string tempDir = Path.Combine(Path.GetDirectoryName(address),$"bfcompressiontemp_{currentDateTime}");
+            string outputPath;
             try
             {
 
@@ -27,8 +27,18 @@ namespace BrainfuckPlus
                 }
                 if (removeComments)
                     RemoveChars(paths.Select(p => Path.Combine(tempDir, Path.GetFileName(p))).ToArray());
-                ZipFile.CreateFromDirectory(tempDir, Path.Combine(Directory.GetParent(tempDir).ToString(), $"bfp_Program_{currentDateTime}.zip"));
-                Console.WriteLine("Zip file successfully created");
+
+                if (outputName == null)
+                    outputPath = Path.Combine(Path.GetDirectoryName(address), $"bfp_Program_{currentDateTime}");
+                else if (Path.IsPathRooted(outputName))
+                    outputPath = outputName;
+                else
+                    outputPath = Path.Combine(Path.GetDirectoryName(address), outputName);
+                outputPath = Path.ChangeExtension(outputPath, "zip");
+                if (!Directory.Exists(Path.GetDirectoryName(outputPath)))
+                    Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
+                ZipFile.CreateFromDirectory(tempDir, outputPath);
+                Console.WriteLine("Zip file successfully created at " + outputPath);
             }
             catch (Exception ex)
             {
