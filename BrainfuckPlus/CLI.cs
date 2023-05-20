@@ -168,13 +168,13 @@ namespace BrainfuckPlus
 
     public struct ParsedOptions
     {
-        public string FileAddress;
-        public bool Debug;
-        public bool RunOutput;
-        public bool Export;
-        public bool BrainfuckCode;
-        public bool RemoveComments;
-        public ObfuscationLevel Obfuscation;
+        public string FileAddress { get; init; }
+        public bool Debug { get; init; }
+        public bool RunOutput { get; init; }
+        public bool Export { get; init; }
+        public bool BrainfuckCode { get; init; }
+        public bool RemoveComments { get; init; }
+        public ObfuscationLevel Obfuscation { get; init; }
         public ParsedOptions(string fileAddress, bool debug, bool runOutput, bool export, bool brainfuckCode, bool removeComments, ObfuscationLevel obfuscation)
         {
             FileAddress = fileAddress;
