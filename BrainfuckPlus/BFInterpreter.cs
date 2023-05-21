@@ -23,7 +23,7 @@ namespace BrainfuckPlus
             int interpreterPosition = 0;
             int nestedLoopCount;
             int debugHiddenCounter = 0;
-
+            
             //--------------------------------
             //           Run code
             //--------------------------------
@@ -223,14 +223,16 @@ namespace BrainfuckPlus
 
 
 
-
+                    default:
+                        interpreterPosition++;
+                        break;
                 }
-                string setTitle = "";
-                for (int i = 0; i <= 9; i++)
-                {
-                    setTitle += Memory[i] + " ";
-                }
-                Console.Title = setTitle;
+                //string setTitle = "";
+                //for (int i = 0; i <= 9; i++)
+                //{
+                //    setTitle += Memory[i] + " ";
+                //}
+                //Console.Title = setTitle;
                 //Console.Title = ($"Position: {currentMemoryPointerPosition}, value: {Memory[currentMemoryPointerPosition]}"); //debug mode
                 //Console.Title = $"{Memory[0] - 48} {Memory[1] - 48} {Memory[2] - 48} {Memory[3] - 48} {Memory[4] - 48} {Memory[5] - 48}";
                 //Console.Title = $"{Memory[0]} {Memory[1]} {Memory[2]} {Memory[3]} {Memory[4]} {Memory[5]} {Memory[6]} {Memory[7]}";
