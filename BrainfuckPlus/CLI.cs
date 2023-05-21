@@ -159,8 +159,8 @@ namespace BrainfuckPlus
             Console.WriteLine("Flag                       | Valid commands             | Explanation");
             Console.WriteLine("---------------------------+--------------------+------------------------------------");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("--obfuscate,  -o           | transpile, export, modify  | Obfuscates the source code by adding random newline characters"); //not implemented
-            Console.WriteLine("--extremeobfuscate,  -eo   | transpile, export, modify  | Obfuscates the source code by adding random newline characters and random characters"); //not implemented
+            Console.WriteLine("--obfuscate,  -o           | transpile                  | Obfuscates the source code by adding random newline characters"); //not implemented
+            Console.WriteLine("--extremeobfuscate,  -eo   | transpile                  | Obfuscates the source code by adding random newline characters and random characters"); //not implemented
             Console.WriteLine("--debug,  -d               | transpile, run             | Allows the use of debug characters. These features will likely not be supported on other brainfuck interpreters"); //implemented
             Console.WriteLine("--brainfuck,  -bf          | run                        | Interprets the code as brainfuck, rather than brainfuckplus"); //implemented
             Console.WriteLine("--removecomments,  -rc     | export, modify             | Removes comments on exported code"); //implemented
