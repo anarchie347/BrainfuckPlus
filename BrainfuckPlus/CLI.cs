@@ -106,7 +106,7 @@ namespace BrainfuckPlus
             if (parameters.Contains("--obfuscate") || parameters.Contains("-o"))
                 parsedOptionsBuilder.Obfuscation = ObfuscationLevel.Normal;
 
-            if (parameters.Contains("--extreme") || parameters.Contains("-e"))
+            if (parameters.Contains("--extremeobfuscate") || parameters.Contains("-eo"))
                 parsedOptionsBuilder.Obfuscation = ObfuscationLevel.Extreme;
 
             parsedOptionsBuilder.BrainfuckCode = parameters.Contains("--brainfuck") || parameters.Contains("-b");
@@ -160,7 +160,7 @@ namespace BrainfuckPlus
             Console.WriteLine("---------------------------+--------------------+------------------------------------");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("--obfuscate,  -o           | transpile, export, modify  | Obfuscates the source code by adding random newline characters"); //not implemented
-            Console.WriteLine("--extremeobfuscate,  -e    | transpile, export, modify  | Obfuscates the source code by adding random newline characters and random characters"); //not implemented
+            Console.WriteLine("--extremeobfuscate,  -eo   | transpile, export, modify  | Obfuscates the source code by adding random newline characters and random characters"); //not implemented
             Console.WriteLine("--debug,  -d               | transpile, run             | Allows the use of debug characters. These features will likely not be supported on other brainfuck interpreters"); //implemented
             Console.WriteLine("--brainfuck,  -bf          | run                        | Interprets the code as brainfuck, rather than brainfuckplus"); //implemented
             Console.WriteLine("--removecomments,  -rc     | export, modify             | Removes comments on exported code"); //implemented
