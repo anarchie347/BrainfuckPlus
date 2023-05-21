@@ -59,9 +59,9 @@ namespace BrainfuckPlus
         public static string ObfuscateNormal(string code)
         {
             Random r = new();
-            for (int i = 0; i < code.Length;i++)
+            for (int i = code.Length - 1; i > 0; i--)
             {
-                if (r.Next(0, 15) == 0)
+                if (r.Next(0, 1) == 0)
                     code = code.Insert(i, "\n");
             }
             return code;
@@ -77,7 +77,7 @@ namespace BrainfuckPlus
             obfuscationChars = sb.ToString();
             obfuscationCharsLen = obfuscationChars.Length;
 
-            for (int i = 0; i < code.Length;i++)
+            for (int i = 0; i <= code.Length; i++)
             {
                 if (r.Next(0, 100) > 0)
                     code = code.Insert(i, obfuscationChars[r.Next(0, obfuscationCharsLen)].ToString());
