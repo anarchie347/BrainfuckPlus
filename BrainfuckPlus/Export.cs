@@ -90,7 +90,6 @@ namespace BrainfuckPlus
 
         private static void RemoveChars(string[] paths)
         {
-            Console.WriteLine("ASD");
             char[] methods = Array.ConvertAll(paths, p => Path.GetFileName(p)[0]);
             string temp;
             StringBuilder sb;
@@ -100,7 +99,7 @@ namespace BrainfuckPlus
                 sb = new StringBuilder();
                 for (int i = 0; i < temp.Length; i++)
                 {
-                    if (methods.Contains(temp[i]) || (Syntax.EXTRA_ALLOWED_CHARS.Contains(temp[i]) && Syntax.COMMENT_CHAR != temp[i]) || Syntax.BF_VALID_CHARS.Contains(temp[i]) || char.IsWhiteSpace(temp[i]))
+                    if (methods.Contains(temp[i]) || (Syntax.EXTRA_ALLOWED_CHARS.Contains(temp[i]) && Syntax.COMMENT_CHAR != temp[i]) || Syntax.BF_VALID_CHARS.Contains(temp[i]) || Syntax.DEBUG_CHARS.Contains(temp[i]) ||  char.IsWhiteSpace(temp[i]))
                     {
                         sb.Append(temp[i]);
                     }
