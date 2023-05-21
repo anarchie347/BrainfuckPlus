@@ -55,5 +55,34 @@ namespace BrainfuckPlus
         {
             return time.ToString("yyyy-MM-dd_HH-mm-ss");
         }
+
+        public static string ObfuscateNormal(string code)
+        {
+            Random r = new();
+            for (int i = 0; i < code.Length;i++)
+            {
+                if (r.Next(0, 15) == 0)
+                    code = code.Insert(i, "\n");
+            }
+            return code;
+        }
+        public static string ObfuscateExtreme(string code, string dissallowedObfuscationChars)
+        {
+            Random r = new();
+            StringBuilder sb = new("!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\n");//all display chars in ascii + newline
+            string obfuscationChars;
+            int obfuscationCharsLen;
+            for (int i = 0; i < dissallowedObfuscationChars.Length;i++)
+                sb.Replace(dissallowedObfuscationChars[i], '\u0000');
+            obfuscationChars = sb.ToString();
+            obfuscationCharsLen = obfuscationChars.Length;
+
+            for (int i = 0; i < code.Length;i++)
+            {
+                if (r.Next(0, 100) > 0)
+                    code = code.Insert(i, obfuscationChars[r.Next(0, obfuscationCharsLen)].ToString());
+            }
+            return code;
+        }
     }
 }

@@ -11,11 +11,15 @@ namespace BrainfuckPlus
 {
     internal static class ConvertToBF
     {
-        public static string Convert(string code, string methodNames,string fileAddress, bool debugMode)
+        public static string Convert(string code, string methodNames,string fileAddress, bool debugMode, ObfuscationLevel obfuscation)
         {
             string directory = Path.GetDirectoryName(fileAddress) ?? fileAddress;
             code = ExpandRepetitions(code);
             code = RecursiveFindSubstitutions(code, methodNames, directory, debugMode);
+            if (obfuscation == ObfuscationLevel.Normal)
+                code = Utils.ObfuscateNormal(code);
+            else if (obfuscation == ObfuscationLevel.Extreme)
+                code = Utils.ObfuscateExtreme(code, Syntax.DEBUG_CHARS + Syntax.BF_VALID_CHARS);
 
             return code;
         }
@@ -41,11 +45,6 @@ namespace BrainfuckPlus
                         j++;
                     }
 
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine(repetitionCounter);
-                    Console.WriteLine($"j={j}");
-                    Console.ForegroundColor = ConsoleColor.White;
-
                     if (code.Length > j)
                         if (repetitionCounter == string.Empty)
                             throw new Exception("Oh no, there was no number for the shorthand repetition because it was not a number");
@@ -65,7 +64,7 @@ namespace BrainfuckPlus
                             newCode.Append(sb);
                         }  
                         else
-                            new string(code[j], int.Parse(repetitionCounter));
+                            newCode.Append(new string(code[j], int.Parse(repetitionCounter)));
 
                     else if (repetitionCounter == string.Empty)
                         throw new Exception("Oh no, there was no number for the shorthand repetition because the end of the string was reached");
@@ -180,5 +179,6 @@ namespace BrainfuckPlus
 
             return index - 1;
         }
+
     }
 }

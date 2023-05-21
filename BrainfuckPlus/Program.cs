@@ -5,6 +5,7 @@ namespace BrainfuckPlus
     {
         static void Main(string[] args)
         {
+
             string methodNames;
             ParsedOptions options = CLI.Parse(args);
             
@@ -29,7 +30,7 @@ namespace BrainfuckPlus
                 return;
             }
             string sourcecode = GetSourceCode.GetCode(options.FileAddress, options.Debug, out methodNames);
-            string bfcode = ConvertToBF.Convert(sourcecode, methodNames, options.FileAddress, options.Debug);
+            string bfcode = ConvertToBF.Convert(sourcecode, methodNames, options.FileAddress, options.Debug, options.Obfuscation);
 
             if (!options.RunOutput)
             {
