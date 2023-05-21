@@ -238,7 +238,7 @@ namespace BrainfuckPlus
                 //Thread.Sleep(5);
             }
             sw.Stop();
-            Console.WriteLine($"Execution complete. Took {sw.ElapsedMilliseconds}ms");
+            Console.WriteLine($"\nExecution complete. Took {sw.ElapsedMilliseconds}ms");
 
             Console.ReadKey();
         }
