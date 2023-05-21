@@ -123,10 +123,10 @@ namespace BrainfuckPlus
             if (parsedOptionsBuilder.Obfuscation == ObfuscationLevel.Extreme)
             {
 
-                parsedOptionsBuilder.ExtremeObfuscationCount = 0;
+                parsedOptionsBuilder.ExtremeObfuscationCount = 100;
                 for (int i = 0; i < parameters.Length; i++)
                     if (parameters[i].StartsWith("--eocount="))
-                        if (parsedOptionsBuilder.ExtremeObfuscationCount == 0)
+                        if (parsedOptionsBuilder.ExtremeObfuscationCount == 100)
                             parsedOptionsBuilder.ExtremeObfuscationCount = int.Parse(parameters[i].Substring(10));
                         else
                             throw new Exception("Two eocounts given");
