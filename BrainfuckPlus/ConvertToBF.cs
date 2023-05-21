@@ -11,7 +11,7 @@ namespace BrainfuckPlus
 {
     internal static class ConvertToBF
     {
-        public static string Convert(string code, string methodNames,string fileAddress, bool debugMode, ObfuscationLevel obfuscation)
+        public static string Convert(string code, string methodNames,string fileAddress, bool debugMode, ObfuscationLevel obfuscation, int eocount)
         {
             string directory = Path.GetDirectoryName(fileAddress) ?? fileAddress;
             code = ExpandRepetitions(code);
@@ -19,7 +19,7 @@ namespace BrainfuckPlus
             if (obfuscation == ObfuscationLevel.Normal)
                 code = Utils.ObfuscateNormal(code);
             else if (obfuscation == ObfuscationLevel.Extreme)
-                code = Utils.ObfuscateExtreme(code, Syntax.DEBUG_CHARS + Syntax.BF_VALID_CHARS);
+                code = Utils.ObfuscateExtreme(code, Syntax.DEBUG_CHARS + Syntax.BF_VALID_CHARS, eocount);
 
             return code;
         }

@@ -66,7 +66,7 @@ namespace BrainfuckPlus
             }
             return code;
         }
-        public static string ObfuscateExtreme(string code, string dissallowedObfuscationChars)
+        public static string ObfuscateExtreme(string code, string dissallowedObfuscationChars, int extremeObfuscationCount)
         {
             Random r = new();
             StringBuilder sb = new("!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\n");//all display chars in ascii + newline
@@ -79,7 +79,7 @@ namespace BrainfuckPlus
 
             for (int i = 0; i <= code.Length; i++)
             {
-                if (r.Next(0, 100) > 0)
+                if (r.Next(0, extremeObfuscationCount) > 0)
                     code = code.Insert(i, obfuscationChars[r.Next(0, obfuscationCharsLen)].ToString());
             }
             return code;

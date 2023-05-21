@@ -109,7 +109,7 @@ namespace BrainfuckPlus
             if (parameters.Contains("--extremeobfuscate") || parameters.Contains("-eo"))
                 parsedOptionsBuilder.Obfuscation = ObfuscationLevel.Extreme;
 
-            parsedOptionsBuilder.BrainfuckCode = parameters.Contains("--brainfuck") || parameters.Contains("-b");
+            parsedOptionsBuilder.BrainfuckCode = parameters.Contains("--brainfuck") || parameters.Contains("-bf");
 
             parsedOptionsBuilder.RemoveComments = parameters.Contains("--removecomments") || parameters.Contains("-rc");
 
@@ -120,6 +120,19 @@ namespace BrainfuckPlus
                         parsedOptionsBuilder.OutputPath = parameters[i].Substring(7);
                     else
                         throw new Exception("Two output paths given");
+            if (parsedOptionsBuilder.Obfuscation == ObfuscationLevel.Extreme)
+            {
+
+                parsedOptionsBuilder.ExtremeObfuscationCount = 0;
+                for (int i = 0; i < parameters.Length; i++)
+                    if (parameters[i].StartsWith("--eocount="))
+                        if (parsedOptionsBuilder.ExtremeObfuscationCount == 0)
+                            parsedOptionsBuilder.ExtremeObfuscationCount = int.Parse(parameters[i].Substring(10));
+                        else
+                            throw new Exception("Two eocounts given");
+                if (parsedOptionsBuilder.ExtremeObfuscationCount < 2)
+                    throw new Exception("eocount must be greater than or equal to 2");
+            }
 
             if (!File.Exists(parsedOptionsBuilder.FileAddress))
                 throw new Exception("File doesnt exist");
@@ -174,6 +187,7 @@ namespace BrainfuckPlus
             Console.WriteLine("---------------------------+-------------+--------------------+------------------------------------");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("--name=value               | string      | transpile, export  | File path (absolute or relative) for the outputted zip/bf file (do not include file extension)"); //implemented
+            Console.WriteLine("--eocount=value            | integer     | transpile          | Sets how much a file is extremely obfuscated by. Only used if extreme obfuscation flag is present"); //implemented
 
         }
     }
@@ -188,8 +202,9 @@ namespace BrainfuckPlus
         public bool BrainfuckCode { get; init; }
         public bool RemoveComments { get; init; }
         public string OutputPath { get; init; }
+        public int ExtremeObfuscationCount { get; init; }
         public ObfuscationLevel Obfuscation { get; init; }
-        public ParsedOptions(string fileAddress, bool debug, bool runOutput, bool export, bool brainfuckCode, bool removeComments, string outputPath, ObfuscationLevel obfuscation)
+        public ParsedOptions(string fileAddress, bool debug, bool runOutput, bool export, bool brainfuckCode, bool removeComments, string outputPath, int extremeObfuscationCount, ObfuscationLevel obfuscation)
         {
             FileAddress = fileAddress;
             Debug = debug;
@@ -198,6 +213,7 @@ namespace BrainfuckPlus
             BrainfuckCode = brainfuckCode;
             RemoveComments = removeComments;
             OutputPath = outputPath;
+            ExtremeObfuscationCount = extremeObfuscationCount;
             Obfuscation = obfuscation;
         }
     }
@@ -211,11 +227,12 @@ namespace BrainfuckPlus
         public bool BrainfuckCode { get; set; }
         public bool RemoveComments { get; set; }
         public string OutputPath { get; set; }
+        public int ExtremeObfuscationCount { get; set; }
         public ObfuscationLevel Obfuscation { get; set; }
 
         public ParsedOptions Build()
         {
-            return new ParsedOptions(FileAddress, Debug, RunOutput, Export, BrainfuckCode, RemoveComments, OutputPath, Obfuscation);
+            return new ParsedOptions(FileAddress, Debug, RunOutput, Export, BrainfuckCode, RemoveComments, OutputPath, ExtremeObfuscationCount, Obfuscation);
         }
     }
 }
