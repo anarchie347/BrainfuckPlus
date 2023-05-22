@@ -83,7 +83,7 @@ namespace BrainfuckPlus
                     //run
                     parsedOptionsBuilder.RunOutput = true;
                     parsedOptionsBuilder.Export = false;
-                    parsedOptionsBuilder.Modify = true;
+                    parsedOptionsBuilder.Modify = false;
                     break;
                     
 
@@ -92,7 +92,7 @@ namespace BrainfuckPlus
                     //transpile
                     parsedOptionsBuilder.RunOutput = false;
                     parsedOptionsBuilder.Export = false;
-                    parsedOptionsBuilder.Modify = true;
+                    parsedOptionsBuilder.Modify = false;
                     break;
 
                 case "export":
@@ -100,7 +100,7 @@ namespace BrainfuckPlus
                     //export
                     parsedOptionsBuilder.RunOutput = false;
                     parsedOptionsBuilder.Export = true;
-                    parsedOptionsBuilder.Modify = true;
+                    parsedOptionsBuilder.Modify = false;
                     break;
 
                 case "modify":

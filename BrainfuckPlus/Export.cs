@@ -28,7 +28,7 @@ namespace BrainfuckPlus
                 if (removeComments)
                     RemoveChars(paths.Select(p => Path.Combine(tempDir, Path.GetFileName(p))).ToArray());
 
-                if (outputName == null)
+                if (string.IsNullOrEmpty(outputName))
                     outputPath = Path.Combine(Path.GetDirectoryName(address), $"bfp_Program_{currentDateTime}");
                 else if (Path.IsPathRooted(outputName))
                     outputPath = outputName;
