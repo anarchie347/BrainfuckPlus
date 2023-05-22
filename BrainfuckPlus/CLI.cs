@@ -50,7 +50,7 @@ namespace BrainfuckPlus
                 Environment.Exit(0);
             }
             //accounts for ommitting the command when a file is opened with the program
-            if (!new string[] { "transpile", "t", "export", "e", "run", "r" }.Contains(args[0]))
+            if (!new string[] { "transpile", "t", "export", "e", "run", "r", "modify", "m" }.Contains(args[0]))
             {
                 command = "run";
                 parsedOptionsBuilder.FileAddress = args[0];
@@ -83,6 +83,7 @@ namespace BrainfuckPlus
                     //run
                     parsedOptionsBuilder.RunOutput = true;
                     parsedOptionsBuilder.Export = false;
+                    parsedOptionsBuilder.Modify = true;
                     break;
                     
 
@@ -91,6 +92,7 @@ namespace BrainfuckPlus
                     //transpile
                     parsedOptionsBuilder.RunOutput = false;
                     parsedOptionsBuilder.Export = false;
+                    parsedOptionsBuilder.Modify = true;
                     break;
 
                 case "export":
@@ -98,7 +100,17 @@ namespace BrainfuckPlus
                     //export
                     parsedOptionsBuilder.RunOutput = false;
                     parsedOptionsBuilder.Export = true;
-                    break;     
+                    parsedOptionsBuilder.Modify = true;
+                    break;
+
+                case "modify":
+                case "m":
+                    //modify
+                    parsedOptionsBuilder.RunOutput = false;
+                    parsedOptionsBuilder.Export = false;
+                    parsedOptionsBuilder.Modify = true;
+                    break;
+                    
             }
 
             parsedOptionsBuilder.Debug = parameters.Contains("--debug") || parameters.Contains("-d");
@@ -120,6 +132,7 @@ namespace BrainfuckPlus
                         parsedOptionsBuilder.OutputPath = parameters[i].Substring(7);
                     else
                         throw new Exception("Two output paths given");
+
             if (parsedOptionsBuilder.Obfuscation == ObfuscationLevel.Extreme)
             {
 
@@ -133,6 +146,8 @@ namespace BrainfuckPlus
                 if (parsedOptionsBuilder.ExtremeObfuscationCount < 2)
                     throw new Exception("eocount must be greater than or equal to 2");
             }
+
+            parsedOptionsBuilder.ShortenMethodNames = parameters.Contains("--shortenmethodnames") || parameters.Contains("-sm");
 
             if (!File.Exists(parsedOptionsBuilder.FileAddress))
                 throw new Exception("File doesnt exist");
@@ -177,7 +192,7 @@ namespace BrainfuckPlus
             Console.WriteLine("--debug,  -d               | transpile, run             | Allows the use of debug characters. These features will likely not be supported on other brainfuck interpreters"); //implemented
             Console.WriteLine("--brainfuck,  -bf          | run                        | Interprets the code as brainfuck, rather than brainfuckplus"); //implemented
             Console.WriteLine("--removecomments,  -rc     | export, modify             | Removes comments on exported code"); //implemented
-            Console.WriteLine("--shortenmethodnames, -sm  | modify                     | Shortens all method names to only the first character"); //not implemented
+            Console.WriteLine("--shortenmethodnames, -sm  | modify                     | Shortens all method names to only the first character"); //implemented
             Console.WriteLine("");
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Magenta;
@@ -203,8 +218,10 @@ namespace BrainfuckPlus
         public bool RemoveComments { get; init; }
         public string OutputPath { get; init; }
         public int ExtremeObfuscationCount { get; init; }
+        public bool ShortenMethodNames { get; init; }
+        public bool Modify { get; init; }
         public ObfuscationLevel Obfuscation { get; init; }
-        public ParsedOptions(string fileAddress, bool debug, bool runOutput, bool export, bool brainfuckCode, bool removeComments, string outputPath, int extremeObfuscationCount, ObfuscationLevel obfuscation)
+        public ParsedOptions(string fileAddress, bool debug, bool runOutput, bool export, bool brainfuckCode, bool removeComments, string outputPath, int extremeObfuscationCount, bool shortenMethodNames, bool modify, ObfuscationLevel obfuscation)
         {
             FileAddress = fileAddress;
             Debug = debug;
@@ -214,6 +231,8 @@ namespace BrainfuckPlus
             RemoveComments = removeComments;
             OutputPath = outputPath;
             ExtremeObfuscationCount = extremeObfuscationCount;
+            ShortenMethodNames = shortenMethodNames;
+            Modify = modify;
             Obfuscation = obfuscation;
         }
     }
@@ -228,11 +247,14 @@ namespace BrainfuckPlus
         public bool RemoveComments { get; set; }
         public string OutputPath { get; set; }
         public int ExtremeObfuscationCount { get; set; }
+        public bool ShortenMethodNames { get; set; }
+        public bool Modify { get; set; }
         public ObfuscationLevel Obfuscation { get; set; }
+
 
         public ParsedOptions Build()
         {
-            return new ParsedOptions(FileAddress, Debug, RunOutput, Export, BrainfuckCode, RemoveComments, OutputPath, ExtremeObfuscationCount, Obfuscation);
+            return new ParsedOptions(FileAddress, Debug, RunOutput, Export, BrainfuckCode, RemoveComments, OutputPath, ExtremeObfuscationCount, ShortenMethodNames, Modify, Obfuscation);
         }
     }
 }
