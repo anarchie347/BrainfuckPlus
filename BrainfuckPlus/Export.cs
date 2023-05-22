@@ -13,7 +13,7 @@ namespace BrainfuckPlus
     {
         public static void CreateCompressedFile(string address, bool removeComments, string? outputName = null)
         {
-            string[] paths = Utils.GetFileAddresses(address);
+            string[] paths = Utils.GetReferencedFileAddresses(address);
             string currentDateTime = DateTime.Now.ToFileDateFormat();
             string tempDir = Path.Combine(Path.GetDirectoryName(address),$"bfcompressiontemp_{currentDateTime}");
             string outputPath;

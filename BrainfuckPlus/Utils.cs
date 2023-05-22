@@ -86,7 +86,7 @@ namespace BrainfuckPlus
         }
 
 
-        public static string[] GetFileAddresses(string address)
+        public static string[] GetReferencedFileAddresses(string address)
         {
             List<string> paths = RecursiveGetFiles(address);
             List<string> pathsNoDuplicates = new();
