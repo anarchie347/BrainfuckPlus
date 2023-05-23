@@ -26,7 +26,7 @@ namespace BrainfuckPlus
                     File.Copy(path, Path.Combine(tempDir, Path.GetFileName(path)));
                 }
                 if (removeComments)
-                    Utils.RemoveChars(paths.Select(p => Path.Combine(tempDir, Path.GetFileName(p))).ToArray());
+                    Utils.RemoveNonCodeChars(paths.Select(p => Path.Combine(tempDir, Path.GetFileName(p))).ToArray());
 
                 if (string.IsNullOrEmpty(outputName))
                     outputPath = Path.Combine(Path.GetDirectoryName(address), $"bfp_Program_{currentDateTime}");
