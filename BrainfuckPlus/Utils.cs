@@ -124,5 +124,27 @@ namespace BrainfuckPlus
 
             return paths;
         }
+
+        public static void RemoveChars(string[] paths)
+        {
+            char[] methods = Array.ConvertAll(paths, p => Path.GetFileName(p)[0]);
+            string temp;
+            StringBuilder sb;
+            foreach (string path in paths)
+            {
+                temp = File.ReadAllText(path);
+                sb = new StringBuilder();
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    if (Syntax.COMMENT_CHAR == temp[i])
+                        break;
+                    if (methods.Contains(temp[i]) || Syntax.EXTRA_ALLOWED_CHARS.Contains(temp[i]) || Syntax.BF_VALID_CHARS.Contains(temp[i]) || Syntax.DEBUG_CHARS.Contains(temp[i]) || char.IsWhiteSpace(temp[i]))
+                    {
+                        sb.Append(temp[i]);
+                    }
+                }
+                File.WriteAllText(path, sb.ToString());
+            }
+        }
     }
 }
