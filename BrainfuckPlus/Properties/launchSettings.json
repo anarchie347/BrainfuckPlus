@@ -1,8 +1,7 @@
 {
   "profiles": {
     "BrainfuckPlus": {
-      "commandName": "Project",
-      "commandLineArgs": "m \"C:\\Users\\Archie\\source\\repos\\BrainfuckPlus\\testcode\\m.bfp\" -sm"
+      "commandName": "Project"
     }
   }
 }

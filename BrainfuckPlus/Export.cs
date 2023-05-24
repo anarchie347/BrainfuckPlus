@@ -11,7 +11,7 @@ namespace BrainfuckPlus
 {
     internal class Export
     {
-        public static void CreateCompressedFile(string address, bool removeComments, string? outputName = null)
+        public static void CreateCompressedFile(string address, bool removeComments, bool removeDebug, string? outputName = null)
         {
             string[] paths = Utils.GetReferencedFileAddresses(address);
             string currentDateTime = DateTime.Now.ToFileDateFormat();
@@ -25,9 +25,8 @@ namespace BrainfuckPlus
                 {
                     File.Copy(path, Path.Combine(tempDir, Path.GetFileName(path)));
                 }
-                if (removeComments)
-                    Utils.RemoveNonCodeChars(paths.Select(p => Path.Combine(tempDir, Path.GetFileName(p))).ToArray());
-
+                if (removeComments || removeDebug)
+                    Utils.FilterCode(paths.Select(p => Path.Combine(tempDir, Path.GetFileName(p))).ToArray(), removeDebug, removeComments);
                 if (string.IsNullOrEmpty(outputName))
                     outputPath = Path.Combine(Path.GetDirectoryName(address), $"bfp_Program_{currentDateTime}");
                 else if (Path.IsPathRooted(outputName))

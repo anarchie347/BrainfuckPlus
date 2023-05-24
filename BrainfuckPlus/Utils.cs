@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 
 namespace BrainfuckPlus
 {
@@ -125,7 +126,7 @@ namespace BrainfuckPlus
             return paths;
         }
 
-        public static void RemoveChars(string[] paths)
+        public static void FilterCode(string[] paths, bool removeDebug, bool removeComments)
         {
             char[] methods = Array.ConvertAll(paths, p => Path.GetFileName(p)[0]);
             string temp;
@@ -136,11 +137,28 @@ namespace BrainfuckPlus
                 sb = new StringBuilder();
                 for (int i = 0; i < temp.Length; i++)
                 {
-                    if (Syntax.COMMENT_CHAR == temp[i])
-                        break;
-                    if (methods.Contains(temp[i]) || Syntax.EXTRA_ALLOWED_CHARS.Contains(temp[i]) || Syntax.BF_VALID_CHARS.Contains(temp[i]) || Syntax.DEBUG_CHARS.Contains(temp[i]) || char.IsWhiteSpace(temp[i]))
+
+                    if (temp[i] == Syntax.COMMENT_CHAR)
                     {
-                        sb.Append(temp[i]);
+                        if (removeComments)
+                            break;
+                        else
+                            sb.Append(temp.Substring(i));
+                    }
+                    else if (Syntax.DEBUG_CHARS.Contains(temp[i]))
+                    {
+                        if (!removeDebug)
+                            sb.Append(temp[i]);
+                    }
+                    else
+                    {
+                        if (removeComments)
+                        {
+                            if (methods.Contains(temp[i]) || Syntax.EXTRA_ALLOWED_CHARS.Contains(temp[i]) || Syntax.BF_VALID_CHARS.Contains(temp[i]) || char.IsWhiteSpace(temp[i]))
+                                sb.Append(temp[i]);
+                        }
+                        else
+                            sb.Append(temp[i]);
                     }
                 }
                 File.WriteAllText(path, sb.ToString());
