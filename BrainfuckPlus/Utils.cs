@@ -140,10 +140,9 @@ namespace BrainfuckPlus
 
                     if (temp[i] == Syntax.COMMENT_CHAR)
                     {
-                        if (removeComments)
-                            break;
-                        else
+                        if (!removeComments)
                             sb.Append(temp.Substring(i));
+                        break;
                     }
                     else if (Syntax.DEBUG_CHARS.Contains(temp[i]))
                     {
