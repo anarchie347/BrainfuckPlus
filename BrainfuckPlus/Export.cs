@@ -11,7 +11,7 @@ namespace BrainfuckPlus
 {
     internal class Export
     {
-        public static void CreateCompressedFile(string address, bool removeComments, bool removeDebug, string? outputName = null)
+        public static void CreateCompressedFile(string address, bool removeDebug, bool removeComments, string? outputName = null)
         {
             string[] paths = Utils.GetReferencedFileAddresses(address);
             string currentDateTime = DateTime.Now.ToFileDateFormat();

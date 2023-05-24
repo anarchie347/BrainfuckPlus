@@ -176,8 +176,8 @@ namespace BrainfuckPlus
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("run, r                     | transpiles to brainfuck and executes a given code file"); //implemented
             Console.WriteLine("transpile, t               | transpiles to brainfuck and outputs a brainfuck file"); //implemented
-            Console.WriteLine("export, e                  | finds all required methods, and compresses them to a zip file"); //mostly implemented
-            Console.WriteLine("modify, m                  | applies given parameter operations to all files in a directory or used by a file"); //not implemented
+            Console.WriteLine("export, e                  | finds all required methods, and compresses them to a zip file"); //implemented
+            Console.WriteLine("modify, m                  | applies given parameter operations to all files in a directory or used by a file"); //implemented
             Console.WriteLine("help, ?                    | show this menu"); //implemented
             Console.WriteLine("");
             Console.WriteLine("");

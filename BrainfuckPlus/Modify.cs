@@ -26,5 +26,17 @@ namespace BrainfuckPlus
                 Console.WriteLine(ex.Message);
             }
         }
+
+        public static void Filter(string address, bool removeDebug, bool removeComments)
+        {
+            string[] paths = Utils.GetReferencedFileAddresses(address);
+            Utils.FilterCode(paths, removeDebug, removeComments);
+            if (removeDebug)
+                Console.WriteLine("Debug charactes successfully removed");
+            if (removeComments)
+                Console.WriteLine("Comments successfully removed");
+            if (!(removeComments || removeDebug))
+                Console.WriteLine("You somehow modified nothing... hmmm\nThis shouldn't happen");
+        }
     }
 }
