@@ -201,8 +201,6 @@ namespace BrainfuckPlus
                     throw new Exception("obfuscation is not compatible with export (it is planned though)");
                 if (options.BrainfuckCode)
                     throw new Exception("brainfuck is not compatible with export");
-                if (options.ShortenMethodNames)
-                    throw new Exception("shortenmethodnames is not compatible with export (coming soon though)");
             }
             //if modify
             //allowed params: removecomments, shortenmethodnames, debug
@@ -253,7 +251,7 @@ namespace BrainfuckPlus
             Console.WriteLine("--debug,  -d               | transpile, run             | Allows the use of debug characters. These features will likely not be supported on other brainfuck interpreters"); //implemented
             Console.WriteLine("--brainfuck,  -bf          | run                        | Interprets the code as brainfuck, rather than brainfuckplus"); //implemented
             Console.WriteLine("--removecomments,  -rc     | export, modify             | Removes comments on exported code"); //implemented
-            Console.WriteLine("--shortenmethodnames, -sm  | modify                     | Shortens all method names to only the first character"); //implemented
+            Console.WriteLine("--shortenmethodnames, -sm  | modify, export             | Shortens all method names to only the first character"); //implemented
             Console.WriteLine("--removedebug, -rd         | modify, export             | Removes debug characters from exported/modifed code");
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Magenta;

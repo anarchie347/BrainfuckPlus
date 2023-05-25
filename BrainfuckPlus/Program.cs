@@ -19,7 +19,7 @@ namespace BrainfuckPlus
             
             if (options.Export)
             {
-                Export.CreateCompressedFile(options.FileAddress, !options.Debug, options.RemoveComments, options.OutputPath);
+                Export.CreateCompressedFile(options.FileAddress, !options.Debug, options.RemoveComments, options.ShortenMethodNames, options.OutputPath);
                 Console.ReadKey();
                 return;
             }
@@ -32,7 +32,7 @@ namespace BrainfuckPlus
             if (options.Modify)
             {
                 if (options.ShortenMethodNames)
-                    Modify.ShortenMethodNames(options.FileAddress);
+                    Modify.ShortenMethodNames(options.FileAddress, true);
                 if (!options.Debug || options.RemoveComments)
                     Modify.Filter(options.FileAddress, !options.Debug, options.RemoveComments);
                 return;
