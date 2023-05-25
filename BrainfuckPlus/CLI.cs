@@ -112,8 +112,10 @@ namespace BrainfuckPlus
                     break;
                     
             }
-
-            parsedOptionsBuilder.Debug = parameters.Contains("--debug") || parameters.Contains("-d");
+            if (command == "run" || command == "r" || command == "transpile" || command == "t")
+                parsedOptionsBuilder.Debug = parameters.Contains("--debug") || parameters.Contains("-d");
+            else
+                parsedOptionsBuilder.Debug = !(parameters.Contains("--removedebug") || parameters.Contains("-rd"));           
 
             if (parameters.Contains("--obfuscate") || parameters.Contains("-o"))
                 parsedOptionsBuilder.Obfuscation = ObfuscationLevel.Normal;
@@ -193,7 +195,7 @@ namespace BrainfuckPlus
             Console.WriteLine("--brainfuck,  -bf          | run                        | Interprets the code as brainfuck, rather than brainfuckplus"); //implemented
             Console.WriteLine("--removecomments,  -rc     | export, modify             | Removes comments on exported code"); //implemented
             Console.WriteLine("--shortenmethodnames, -sm  | modify                     | Shortens all method names to only the first character"); //implemented
-            Console.WriteLine("");
+            Console.WriteLine("--removedebug, -rd         | modify, export             | Removes debug characters from exported/modifed code");
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("Value Parameters:");
