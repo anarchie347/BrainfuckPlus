@@ -154,8 +154,67 @@ namespace BrainfuckPlus
             if (!File.Exists(parsedOptionsBuilder.FileAddress))
                 throw new Exception("File doesnt exist");
 
+            ValidateOptions(parsedOptionsBuilder);
+
             return parsedOptionsBuilder.Build();
         }
+        private static void ValidateOptions(ParsedOptionsBuilder options)
+        {
+
+            //options list
+
+            //obfuscation
+            //debug
+            //brainfuck
+            //removecomments
+            //shortenmethodnames
+            //extremeobfuscationcount
+            //outputname
+
+            //if run
+            //allowed params: debug, brainfuck
+            if (options.RunOutput)
+            {
+                if (options.Obfuscation != ObfuscationLevel.None)
+                    throw new Exception("obfuscation is not compatible with run");
+                if (options.RemoveComments)
+                    throw new Exception("removecomments is not compatible with run");
+                if (options.ShortenMethodNames)
+                    throw new Exception("shortenmethodnames is not compatible with run");
+            }
+            //if transpile
+            //allowed params: obfuscation, debug, outputname, eocount
+            else if (!(options.RunOutput || options.Export || options.Modify))
+            {
+                if (options.BrainfuckCode)
+                    throw new Exception("brainfuck is not compatible with transpile");
+                if (options.RemoveComments)
+                    throw new Exception("removecomments is not compatible with transpile");
+                if (options.ShortenMethodNames)
+                    throw new Exception("shortenmethodnames is not compatible with transpile");
+            }
+            //if export
+            //allowed params: removecomments, debug, name
+            else if (options.Export)
+            {
+                if (options.Obfuscation != ObfuscationLevel.None)
+                    throw new Exception("obfuscation is not compatible with export (it is planned though)");
+                if (options.BrainfuckCode)
+                    throw new Exception("brainfuck is not compatible with export");
+                if (options.ShortenMethodNames)
+                    throw new Exception("shortenmethodnames is not compatible with export (coming soon though)");
+            }
+            //if modify
+            //allowed params: removecomments, shortenmethodnames, debug
+            else
+            {
+                if (options.Obfuscation != ObfuscationLevel.None)
+                    throw new Exception("obfuscation is not compatible with modify (it is planned though)");
+                if (options.BrainfuckCode)
+                    throw new Exception("brainfuck is not compatible with modify");
+            }
+        }
+
 
         private static void Help()
         {
