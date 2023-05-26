@@ -5,7 +5,6 @@ namespace BrainfuckPlus
     {
         static void Main(string[] args)
         {
-
             string methodNames;
             ParsedOptions options = CLI.Parse(args);
             
