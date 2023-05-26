@@ -243,11 +243,11 @@ namespace BrainfuckPlus
 			Console.WriteLine("Command                    | Explanation");
 			Console.WriteLine("---------------------------+------------------------------------");
 			Console.ForegroundColor = ConsoleColor.White;
-			Console.WriteLine("run, r                     | transpiles to brainfuck and executes a given code file"); //implemented
-			Console.WriteLine("transpile, t               | transpiles to brainfuck and outputs a brainfuck file"); //implemented
-			Console.WriteLine("export, e                  | finds all required methods, and compresses them to a zip file"); //implemented
-			Console.WriteLine("modify, m                  | applies given parameter operations to all files in a directory or used by a file"); //implemented
-			Console.WriteLine("help, ?                    | show this menu"); //implemented
+			Console.WriteLine("run, r                     | transpiles to brainfuck and executes a given code file");
+			Console.WriteLine("transpile, t               | transpiles to brainfuck and outputs a brainfuck file");
+			Console.WriteLine("export, e                  | finds all required methods, and compresses them to a zip file");
+			Console.WriteLine("modify, m                  | applies given parameter operations to all files in a directory or used by a file");
+			Console.WriteLine("help, ?                    | show this menu");
 			Console.WriteLine("");
 			Console.WriteLine("");
 			Console.ForegroundColor = ConsoleColor.Magenta;
@@ -256,12 +256,12 @@ namespace BrainfuckPlus
 			Console.WriteLine("Flag                       | Valid commands             | Explanation");
 			Console.WriteLine("---------------------------+--------------------+------------------------------------");
 			Console.ForegroundColor = ConsoleColor.White;
-			Console.WriteLine("--obfuscate,  -o           | transpile                  | Obfuscates the source code by adding random newline characters"); //implemented
-			Console.WriteLine("--extremeobfuscate,  -eo   | transpile                  | Obfuscates the source code by adding random newline characters and random characters"); //implemented
-			Console.WriteLine("--debug,  -d               | transpile, run             | Allows the use of debug characters. These features will likely not be supported on other brainfuck interpreters"); //implemented
-			Console.WriteLine("--brainfuck,  -bf          | run                        | Interprets the code as brainfuck, rather than brainfuckplus"); //implemented
-			Console.WriteLine("--removecomments,  -rc     | export, modify             | Removes comments on exported code"); //implemented
-			Console.WriteLine("--shortenmethodnames, -sm  | modify, export             | Shortens all method names to only the first character"); //implemented
+			Console.WriteLine("--obfuscate,  -o           | transpile                  | Obfuscates the source code by adding random newline characters");
+			Console.WriteLine("--extremeobfuscate,  -eo   | transpile                  | Obfuscates the source code by adding random newline characters and random characters");
+			Console.WriteLine("--debug,  -d               | transpile, run             | Allows the use of debug characters. These features will likely not be supported on other brainfuck interpreters");
+			Console.WriteLine("--brainfuck,  -bf          | run                        | Interprets the code as brainfuck, rather than brainfuckplus");
+			Console.WriteLine("--removecomments,  -rc     | export, modify             | Removes comments on exported code");
+			Console.WriteLine("--shortenmethodnames, -sm  | modify, export             | Shortens all method names to only the first character");
 			Console.WriteLine("--removedebug, -rd         | modify, export             | Removes debug characters from exported/modifed code");
 			Console.WriteLine("");
 			Console.ForegroundColor = ConsoleColor.Magenta;
@@ -270,8 +270,8 @@ namespace BrainfuckPlus
 			Console.WriteLine("Parameter                  | Value type  | Valid commands     | Explanation");
 			Console.WriteLine("---------------------------+-------------+--------------------+------------------------------------");
 			Console.ForegroundColor = ConsoleColor.White;
-			Console.WriteLine("--name=value               | string      | transpile, export  | File path (absolute or relative) for the outputted zip/bf file (do not include file extension)"); //implemented
-			Console.WriteLine("--eocount=value            | integer     | transpile          | Sets how much a file is extremely obfuscated by. Only used if extreme obfuscation flag is present"); //implemented
+			Console.WriteLine("--name=value               | string      | transpile, export  | File path (absolute or relative) for the outputted zip/bf file (do not include file extension)");
+			Console.WriteLine("--eocount=value            | integer     | transpile          | Sets how much a file is extremely obfuscated by. Only used if extreme obfuscation flag is present");
 
 		}
 	}
