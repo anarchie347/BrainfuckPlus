@@ -139,12 +139,12 @@ namespace BrainfuckPlus
 			for (int i = 0; i < parameters.Length; i++)
 				if (parameters[i].StartsWith("--eocount="))
 					if (parsedOptionsBuilder.ExtremeObfuscationCount == null)
-						parsedOptionsBuilder.ExtremeObfuscationCount = int.Parse(parameters[i].Substring(10));
+						if (int.TryParse(parameters[i].Substring(10), out int num) && num > 1)
+							parsedOptionsBuilder.ExtremeObfuscationCount = num;
+						else
+							throw new Exception($"--ecount expected an int greater than 1. '{parameters[i].Substring(10)}' was not an int greater than 1");
 					else
 						throw new Exception("Two eocounts given");
-
-				if (parsedOptionsBuilder.ExtremeObfuscationCount < 2)
-					throw new Exception("eocount must be greater than or equal to 2");
 			
 			parsedOptionsBuilder.ShortenMethodNames = parameters.Contains("--shortenmethodnames") || parameters.Contains("-sm");
 
