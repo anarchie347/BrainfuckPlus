@@ -105,9 +105,3 @@ The comments character is not needed, youcan still add comments just by typing t
 
 This is especially useful because methods mean there may be more characters that you cant use in comments
 
-## Undecided features
-
-### Extra functions
-
-Coded in C# to add functionality not possible in brainfuck, such as changing the console color, or clearing the console
-
