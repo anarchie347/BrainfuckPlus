@@ -105,3 +105,27 @@ The comments character is not needed, youcan still add comments just by typing t
 
 This is especially useful because methods mean there may be more characters that you cant use in comments
 
+## Command Line Interface
+
+This is also available in the program, by passing no command, or using ? or help as the command
+
+Commands should be in the form `bfp <command> <file path> [extra flags/parameters]`. If using the `run` command, the `<command>` can be omitted
+
+### run, r
+
+Transpiles the BrainfuckPlus code to brainfuck, then runs the code using the built in brainfuck interpreter
+
+If no command is given (and the first command line args is a file path) then this command is used
+
+### transpile, t
+
+Transiples the BrainfuckPlus code to brainfuck, and outputs it as a file
+
+### export, e
+
+Find all methods referenced by a particular code file, and creates a zip file containing those methods
+
+### modify, m
+
+Allows the use of some of the flags that can be used with other commands in order to edit exesting BrainfuckPlus files
+
