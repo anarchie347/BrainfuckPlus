@@ -10,16 +10,6 @@ I also plan to maybe make a brainfuckPlusPlus in the future, which deviates more
 
 ## Features
 
-Because brainfuckPlus is in development, below is a list of which features have been implemented currently
-
-- Transpiling: Done
-- Methods: Done
-- Injections: Done
-- Shorthand repetition: Done
-- Debug chars: Done
-- Comment: Done
-- Command line commands and interface and usability: Working on it
-
 ### Transpiles to brainfuck
 
 All code is directly translatable to brainfuck
@@ -115,9 +105,27 @@ The comments character is not needed, youcan still add comments just by typing t
 
 This is especially useful because methods mean there may be more characters that you cant use in comments
 
-## Undecided features
+## Command Line Interface
 
-### Extra functions
+This is also available in the program, by passing no command, or using ? or help as the command
 
-Coded in C# to add functionality not possible in brainfuck, such as changing the console color, or clearing the console
+Commands should be in the form `bfp <command> <file path> [extra flags/parameters]`. If using the `run` command, the `<command>` can be omitted
+
+### run, r
+
+Transpiles the BrainfuckPlus code to brainfuck, then runs the code using the built in brainfuck interpreter
+
+If no command is given (and the first command line args is a file path) then this command is used
+
+### transpile, t
+
+Transiples the BrainfuckPlus code to brainfuck, and outputs it as a file
+
+### export, e
+
+Find all methods referenced by a particular code file, and creates a zip file containing those methods
+
+### modify, m
+
+Allows the use of some of the flags that can be used with other commands in order to edit exesting BrainfuckPlus files
 
