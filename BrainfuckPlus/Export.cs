@@ -39,6 +39,13 @@ namespace BrainfuckPlus
                 outputPath = Path.ChangeExtension(outputPath, "zip");
                 if (!Directory.Exists(Path.GetDirectoryName(outputPath)))
                     Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
+                outputPath = Utils.GetOutputAddress(outputPath, "zip");
+                if (File.Exists(outputPath))
+                {
+                    File.Delete(outputPath);
+                    Console.WriteLine($"Original file {outputPath} has been deleted");
+                }
+                    
                 ZipFile.CreateFromDirectory(tempDir, outputPath);
                 Console.WriteLine("Zip file successfully created at " + outputPath);
             }

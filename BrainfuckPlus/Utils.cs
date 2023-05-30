@@ -12,6 +12,15 @@ namespace BrainfuckPlus
     {
         public static void WriteToFile(string defaultAddress, string fileExtension, string value)
         {
+            StreamWriter sw;
+            sw = new StreamWriter(GetOutputAddress(defaultAddress, fileExtension));
+            sw.Write(value);
+            sw.Close();
+
+        }
+
+        public static string GetOutputAddress(string defaultAddress, string fileExtension)
+        {
             string input;
             if (File.Exists(defaultAddress))
             {
@@ -44,12 +53,8 @@ namespace BrainfuckPlus
             }
             if (!Directory.Exists(Path.GetDirectoryName(defaultAddress)))
                 Directory.CreateDirectory(Path.GetDirectoryName(defaultAddress));
-            
-            StreamWriter sw;
-            sw = new StreamWriter(defaultAddress);
-            sw.Write(value);
-            sw.Close();
 
+            return defaultAddress;
         }
 
         public static string ToFileDateFormat(this DateTime time)
