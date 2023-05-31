@@ -1,8 +1,7 @@
 {
   "profiles": {
     "BrainfuckPlus": {
-      "commandName": "Project",
-      "commandLineArgs": "e \"C:\\Users\\Archie\\Desktop\\bean.bfp\""
+      "commandName": "Project"
     }
   }
 }
