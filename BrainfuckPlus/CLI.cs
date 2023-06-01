@@ -235,6 +235,8 @@ namespace BrainfuckPlus
 			Console.WriteLine();
 			Console.ForegroundColor = ConsoleColor.Green;
 			Console.WriteLine("Github: https://github.com/anarchie347/BrainfuckPlus");
+			Console.WriteLine("Issues: https://github.com/anarchie347/BrainfuckPlus/issues");
+			Console.WriteLine("More information: https://github.com/anarchie347/BrainfuckPlus/blob/master/README.md");
 			Console.WriteLine();
 			Console.ForegroundColor = ConsoleColor.Magenta;
 			Console.WriteLine("Write commands in the form: ");
@@ -263,10 +265,10 @@ namespace BrainfuckPlus
 			Console.WriteLine("--obfuscate,  -o           | transpile                  | Obfuscates the source code by adding random newline characters");
 			Console.WriteLine("--extremeobfuscate,  -eo   | transpile                  | Obfuscates the source code by adding random newline characters and random characters");
 			Console.WriteLine("--debug,  -d               | transpile, run             | Allows the use of debug characters. These features will likely not be supported on other brainfuck interpreters");
-			Console.WriteLine("--brainfuck,  -bf          | run                        | Interprets the code as brainfuck, rather than brainfuckplus");
+			Console.WriteLine("--brainfuck,  -bf          | run                        | Interprets the code as brainfuck, rather than brainfuckplus. Will be enabled by default for .bf files (coming soon)");
 			Console.WriteLine("--removecomments,  -rc     | export, modify             | Removes comments on exported code");
-			Console.WriteLine("--shortenmethodnames, -sm  | modify, export             | Shortens all method names to only the first character");
-			Console.WriteLine("--removedebug, -rd         | modify, export             | Removes debug characters from exported/modifed code");
+			Console.WriteLine("--shortenmethodnames, -sm  | export, modify             | Shortens all method names to only the first character");
+			Console.WriteLine("--removedebug, -rd         | export, modify             | Removes debug characters from exported/modifed code");
 			Console.WriteLine();
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Magenta;
