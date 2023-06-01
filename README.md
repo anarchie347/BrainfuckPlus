@@ -111,21 +111,88 @@ This is also available in the program, by passing no command, or using ? or help
 
 Commands should be in the form `bfp <command> <file path> [extra flags/parameters]`. If using the `run` command, the `<command>` can be omitted
 
-### run, r
+### Commands
+
+#### run, r
 
 Transpiles the BrainfuckPlus code to brainfuck, then runs the code using the built in brainfuck interpreter
 
 If no command is given (and the first command line args is a file path) then this command is used
 
-### transpile, t
+#### transpile, t
 
 Transiples the BrainfuckPlus code to brainfuck, and outputs it as a file
 
-### export, e
+#### export, e
 
 Find all methods referenced by a particular code file, and creates a zip file containing those methods
 
-### modify, m
+#### modify, m
 
 Allows the use of some of the flags that can be used with other commands in order to edit exesting BrainfuckPlus files
 
+### Flags
+
+#### --obfuscate, -o
+
+transpile only
+
+Obfuscates the source code by adding random newline characters
+
+#### --extremeobfuscate, -eo
+
+transpile only
+
+Obfuscates the source code by adding random newline characters and random characters
+
+#### --debug, -d
+
+transpile and run only
+
+Allows the use of debug characters. These features will likely not be supported on other brainfuck interpreters
+
+#### --brainfuck, -bf
+
+run only
+
+The file will be interpreted as brainfuck, rather than BrainfuckPlus
+
+This will be enabled if the file extension is .bf (coming soon)
+
+#### --removecomments, -rc
+
+export and modify only
+
+Removes comments on exported code
+
+#### --shortenmethodnames, -sm
+
+export and modify only
+
+Shortens all method names to only the first character
+
+#### --removedebug, -rd
+
+export and modify only
+
+Removes debug characters from exported/modifed code
+
+### Parameters
+
+#### --name=value
+
+Accepts a string
+
+transpile and export only
+
+File path (absolute or relative) for the outputted zip/bf file (do not include file extension)
+
+#### --eocount=value
+
+Accepts an integer
+
+transpile only
+
+Sets how much a file is extremely obfuscated by. Only used if extreme obfuscation flag is present
+
+The value of this is approximately equal to the number of random characters inserted between each code chararacter
