@@ -136,7 +136,6 @@ namespace BrainfuckPlus
                 injections.Add(code.Substring(charIndex + 1, closebracketIndex - charIndex - 1));
 
                 code = code.Substring(0,charIndex) + code.Substring(closebracketIndex + 1);
-                
             }
             return injections;
         }
@@ -147,9 +146,12 @@ namespace BrainfuckPlus
             while ((index = code.IndexOf(Syntax.CODE_INJECTION_CALL_START_CHAR)) != -1)
             {
                 closeCallIndex = GetClosingBracketIndex(code, index, Syntax.CODE_INJECTION_CALL_START_CHAR, Syntax.CODE_INJECTION_CALL_END_CHAR);
-                if (!int.TryParse(code.AsSpan(index + 1, closeCallIndex - index -1), out injectionIndex)) throw new Exception("Injection index was not an int");
-
-                code = code.Substring(0,index) + injections[injectionIndex] + code.Substring(closeCallIndex + 1); //substitute
+                if (!int.TryParse(code.AsSpan(index + 1, closeCallIndex - index -1), out injectionIndex))
+                    throw new Exception("Injection index was not an int");
+                if (injectionIndex >= injections.Count)
+                    code = code.Substring(0, index) + code.Substring(closeCallIndex + 1); //empty substitution
+                else
+                    code = code.Substring(0,index) + injections[injectionIndex] + code.Substring(closeCallIndex + 1); //substitute
             }
             return code;
         }
