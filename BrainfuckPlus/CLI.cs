@@ -47,7 +47,8 @@ namespace BrainfuckPlus
 			if (args.Length == 0 || args[0] == "?" || args[0] == "help")
 			{
 				Help();
-				Environment.Exit(0);
+                Environment.Exit(0);
+				
 			}
 			//accounts for ommitting the command when a file is opened with the program
 			if (!new string[] { "transpile", "t", "export", "e", "run", "r", "modify", "m" }.Contains(args[0]))
@@ -147,6 +148,12 @@ namespace BrainfuckPlus
 						throw new Exception("Two eocounts given");
 			
 			parsedOptionsBuilder.ShortenMethodNames = parameters.Contains("--shortenmethodnames") || parameters.Contains("-sm");
+
+			if (!(string.IsNullOrEmpty(parsedOptionsBuilder.OutputPath) || Path.IsPathRooted(parsedOptionsBuilder.OutputPath)))
+				parsedOptionsBuilder.OutputPath = Path.GetFullPath(parsedOptionsBuilder.OutputPath);
+
+			if (!(string.IsNullOrEmpty(parsedOptionsBuilder.FileAddress) || Path.IsPathRooted(parsedOptionsBuilder.FileAddress)))
+				parsedOptionsBuilder.FileAddress = Path.GetFullPath(parsedOptionsBuilder.FileAddress);
 
 			if (!File.Exists(parsedOptionsBuilder.FileAddress))
 				throw new Exception("File doesnt exist");
