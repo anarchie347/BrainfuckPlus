@@ -4,9 +4,9 @@ I have done some brainfuck coding. It is painful (as it is meant to be)
 
 BrainfuckPlus aims to keep the same mind hurting style as brainfuck and translates directly to brainfuck at runtime
 
-You can write code in brainfuck Plus, then export it as regular brainfuck
+You can write code in BrainfuckPlus, then export it as regular brainfuck
 
-I also plan to maybe make a brainfuckPlusPlus in the future, which deviates more from brainfuck, so wont easily transpile to brainfuck. A planned feature for brainfuckPlusPlus is functions which can have their own memory, separate to the memory of the program
+I also plan to maybe make a BrainfuckPlusPlus in the future, which deviates more from brainfuck, so wont easily transpile to brainfuck. A planned feature for BrainfuckPlusPlus is functions which can have their own memory, separate to the memory of the program
 
 ## Features
 
@@ -36,7 +36,7 @@ These restrictions only apply to the first lettter of the filename because this 
 
 All methods that a programme uses must be in the same directory as the main code file (might add a way to make methods available for all projects later)
 
-At runtime, all methods calls are substituted with their corresponding brainfuck code, so **recursion is NOT possible** because it will cause a crash by endlessly substituting the method inside itself. This could be fixed by editing the interpreter, but this go against one of the main principles of brainfuckPlus - it transpiles directly (and easily) to brainfuck
+At runtime, all methods calls are substituted with their corresponding brainfuck code, so **recursion is NOT possible** because it will cause a crash by endlessly substituting the method inside itself. This could be fixed by editing the interpreter, but this go against one of the main principles of BrainfuckPlus - it transpiles directly (and easily) to brainfuck
 
 ### Code injections
 
