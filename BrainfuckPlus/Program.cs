@@ -19,7 +19,6 @@ namespace BrainfuckPlus
             if (options.Export)
             {
                 Export.CreateCompressedFile(options.FileAddress, !options.Debug, options.RemoveComments, options.ShortenMethodNames, options.OutputPath);
-                Console.ReadKey();
                 return;
             }
             if (options.BrainfuckCode)

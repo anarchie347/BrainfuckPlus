@@ -242,7 +242,6 @@ namespace BrainfuckPlus
             sw.Stop();
             Console.WriteLine($"\nExecution complete. Took {sw.ElapsedMilliseconds}ms");
 
-            Console.ReadKey();
         }
 
         public static bool ContainsNonCodeChars(string code, string charSet)
