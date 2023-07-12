@@ -30,6 +30,8 @@ namespace BrainfuckPlus
             string repetitionCounter;
             int endInjectIndex;
             string injectCall;
+            int endBlockIndex;
+            string repeatingBlock;
 
 
             for (int i = 0; i < code.Length; i++)
@@ -53,16 +55,27 @@ namespace BrainfuckPlus
                         else if (code[j] == Syntax.CODE_INJECTION_CALL_START_CHAR)
                         {
                             endInjectIndex = GetClosingBracketIndex(code, j, Syntax.CODE_INJECTION_CALL_START_CHAR, Syntax.CODE_INJECTION_CALL_END_CHAR);
-                            injectCall = code.Substring(j, endInjectIndex - j + 1);
+                            injectCall = code.Substring(j, endInjectIndex - j + 1); //include ( )
                             StringBuilder sb = new();
                             for (int k = 0; k < int.Parse(repetitionCounter); k++)
                             {
                                 sb.Append(injectCall);
                             }
                             j = endInjectIndex;
-                            Console.ForegroundColor = ConsoleColor.DarkMagenta;
                             newCode.Append(sb);
-                        }  
+                        }
+                        else if (code[j] == Syntax.CODE_INJECTION_START_CHAR)
+                        {
+                            endBlockIndex = GetClosingBracketIndex(code, j, Syntax.CODE_INJECTION_START_CHAR, Syntax.CODE_INJECTION_END_CHAR);
+                            repeatingBlock = code.Substring(j + 1, endBlockIndex - j - 1); //dont include { }
+                            StringBuilder sb = new();
+                            for (int k = 0; k < int.Parse(repetitionCounter); k++)
+                            {
+                                sb.Append(repeatingBlock);
+                            }
+                            j = endBlockIndex;
+                            newCode.Append(sb);
+                        }
                         else
                             newCode.Append(new string(code[j], int.Parse(repetitionCounter)));
 
