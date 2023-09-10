@@ -11,6 +11,8 @@ namespace BrainfuckPlus
         public const string BF_VALID_CHARS = "[],.+-<>";
         public const string DEBUG_CHARS = @"\:?""|"; //chars that are not allowed in Windows fle names -> cant be methods (on windows). doesnt include /,<,>, these are used for other purposes
         public const char COMMENT_CHAR = '/';
+        public const string BLOCK_COMMENT_START_STRING = "/*";
+        public const string BLOCK_COMMENT_END_STRING = "*/";
         public const char CODE_INJECTION_START_CHAR = '{';
         public const char CODE_INJECTION_END_CHAR = '}';
         public const char CODE_INJECTION_CALL_START_CHAR = '(';

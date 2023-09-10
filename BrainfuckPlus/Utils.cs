@@ -131,42 +131,196 @@ namespace BrainfuckPlus
             return paths;
         }
 
-        public static void FilterCode(string[] paths, bool removeDebug, bool removeComments)
+        public static void FilterCode(string[] paths, bool removeDebug, bool removeComments, bool removeWhiteSpace, string methods = "")
         {
-            char[] methods = Array.ConvertAll(paths, p => Path.GetFileName(p)[0]);
-            string temp;
-            StringBuilder sb;
+            if (methods == "")
+                methods = string.Join("", Array.ConvertAll(paths, p => Path.GetFileName(p)[0]));
+            string fileText;
+            string allowedCharSet = Syntax.BF_VALID_CHARS + methods;
+            if (!removeDebug)
+                allowedCharSet += Syntax.DEBUG_CHARS;
             foreach (string path in paths)
             {
-                temp = File.ReadAllText(path);
-                sb = new StringBuilder();
-                for (int i = 0; i < temp.Length; i++)
+                fileText = File.ReadAllText(path);
+                if (removeComments)
                 {
+                    fileText = Utils.RemoveComments(fileText);
+                    fileText = Utils.RemoveInvalidChars(fileText, allowedCharSet, !removeWhiteSpace);
+                }
+                File.WriteAllText(path, fileText);
+            }
+        }
 
-                    if (temp[i] == Syntax.COMMENT_CHAR)
+        public static void FilterCodeOLD(string[] paths, bool removeDebug, bool removeComments)
+        {
+            char[] methods = Array.ConvertAll(paths, p => Path.GetFileName(p)[0]);
+            string fileText;
+            StringBuilder filteredCode;
+            foreach (string path in paths)
+            {
+                fileText = File.ReadAllText(path);
+                filteredCode = new StringBuilder();
+                for (int i = 0; i < fileText.Length; i++)
+                {
+                    if (fileText.Length > i + Syntax.BLOCK_COMMENT_START_STRING.Length - 1 && fileText.Substring(i, Syntax.BLOCK_COMMENT_START_STRING.Length) == Syntax.BLOCK_COMMENT_START_STRING)
+                    {
+                        int endBlockComment;
+                        if (fileText.Length == i + Syntax.BLOCK_COMMENT_START_STRING.Length - 1)
+                            endBlockComment = fileText.Length - 1;
+                        else
+                        {
+                            endBlockComment = fileText.IndexOf(Syntax.BLOCK_COMMENT_END_STRING, i + Syntax.BLOCK_COMMENT_START_STRING.Length + 1);
+                            if (endBlockComment == -1)
+                                endBlockComment= fileText.Length - 1;
+                        }
+                        i = endBlockComment - 1; //i is incremented at the end of the for loop
+                    }
+                    else if (fileText[i] == Syntax.COMMENT_CHAR)
                     {
                         if (!removeComments)
-                            sb.Append(temp.Substring(i));
+                            filteredCode.Append(fileText.Substring(i));
                         break;
                     }
-                    else if (Syntax.DEBUG_CHARS.Contains(temp[i]))
+                    else if (Syntax.DEBUG_CHARS.Contains(fileText[i]))
                     {
                         if (!removeDebug)
-                            sb.Append(temp[i]);
+                            filteredCode.Append(fileText[i]);
                     }
                     else
                     {
                         if (removeComments)
                         {
-                            if (methods.Contains(temp[i]) || Syntax.EXTRA_ALLOWED_CHARS.Contains(temp[i]) || Syntax.BF_VALID_CHARS.Contains(temp[i]) || char.IsWhiteSpace(temp[i]))
-                                sb.Append(temp[i]);
+                            if (methods.Contains(fileText[i]) || Syntax.EXTRA_ALLOWED_CHARS.Contains(fileText[i]) || Syntax.BF_VALID_CHARS.Contains(fileText[i]) || char.IsWhiteSpace(fileText[i]))
+                                filteredCode.Append(fileText[i]);
                         }
                         else
-                            sb.Append(temp[i]);
+                            filteredCode.Append(fileText[i]);
                     }
                 }
-                File.WriteAllText(path, sb.ToString());
+                File.WriteAllText(path, filteredCode.ToString());
             }
+        }
+        public static bool CheckChar(string text, int index, char checkChar)
+        {
+            if (index >= text.Length)
+                return false;
+            return text[index] == checkChar;
+        }
+        public static bool CheckSequence(string text, int startIndex, string checkSequence)
+        {
+            if (startIndex + checkSequence.Length > text.Length)
+                return false;
+            for (int i = 0; i < checkSequence.Length; i++)
+            {
+                if (text[startIndex + i] != checkSequence[i])
+                    return false;
+            }
+            return true;
+        }
+        public static int GetInclusiveLengthBetweenIndexes(int index1, int index2)
+        {
+            return index2 - index1 + 1;
+        }
+
+        public static string RemoveComments(string code)
+        {
+            string[] lines = code.Split(Environment.NewLine);
+            bool isInComment = false;
+            int blockCommentStart, blockCommentEnd, commentStart;
+            bool keepLooping;
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                blockCommentStart = -1;
+                blockCommentEnd = -1;
+                commentStart = -1;
+                keepLooping = true;
+                do
+                {
+                    if (!isInComment)
+                    {
+                        blockCommentStart = lines[i].IndexOf(Syntax.BLOCK_COMMENT_START_STRING);//start search at beginning because the previous comment will have been removed from the string
+                        if (blockCommentStart > -1)
+                        {
+                            isInComment = true;
+                        }
+                        else
+                        {
+                            commentStart = lines[i].IndexOf(Syntax.COMMENT_CHAR);
+                            if (commentStart > -1)
+                            {
+                                lines[i] = lines[i].Substring(0, commentStart);
+                            }
+                            keepLooping = false;
+                        }
+                    }
+                    else
+                    {
+                        blockCommentEnd = LengthCheckIndexOf(lines[i], Syntax.BLOCK_COMMENT_END_STRING, GetSearchStartPoint(blockCommentStart, false));
+                        if (blockCommentEnd > -1)
+                        {
+                            isInComment = false;
+                            if (blockCommentStart == -1)
+                            {
+                                //block comment from previous line
+                                lines[i] = lines[i].Substring(blockCommentEnd + Syntax.BLOCK_COMMENT_END_STRING.Length);
+                            }
+                            else
+                            {
+                                //block comment from same line
+                                lines[i] = lines[i].Remove(blockCommentStart, Utils.GetInclusiveLengthBetweenIndexes(blockCommentStart, blockCommentEnd + Syntax.BLOCK_COMMENT_END_STRING.Length - 1));
+                            }
+                        }
+                        else
+                        {
+                            keepLooping = false;
+                        }
+                    }
+                } while (keepLooping);
+                if (isInComment)
+                {
+                    if (blockCommentStart == -1)
+                    {
+                        lines[i] = ""; //line was a full block comment
+                    }
+                    else
+                    {
+                        lines[i] = lines[i].Substring(0, blockCommentStart);
+                    }
+
+                }
+            }
+            //this should remove comments
+            return string.Join("\n", lines);
+        }
+
+        private static int LengthCheckIndexOf(string str, string searchFor, int start)
+        {
+            if (start >= str.Length)
+                return -1;
+            return str.IndexOf(searchFor, start);
+        }
+        private static int GetSearchStartPoint(int PrevCommentTokenIndex, bool IsSearchingForStartComment)
+        {
+            if (PrevCommentTokenIndex == -1)
+                return 0;
+
+            int PrevCommentTokenLength = IsSearchingForStartComment ? Syntax.BLOCK_COMMENT_END_STRING.Length : Syntax.BLOCK_COMMENT_START_STRING.Length;
+
+            return PrevCommentTokenIndex + PrevCommentTokenLength;
+        }
+
+        public static string RemoveInvalidChars(string code, string allowedCharSet, bool allowWhiteSpace)
+        {
+            string newCode = "";
+            bool followingRepetitionChar = false;
+            for (int i = 0; i < code.Length; i++)
+            {
+                if (allowedCharSet.Contains(code[i]) || followingRepetitionChar && char.IsDigit(code[i]) || (allowWhiteSpace && char.IsWhiteSpace(code[i])))
+                    newCode += code[i];
+                followingRepetitionChar = (code[i] == Syntax.REPETITION_CHAR) || (followingRepetitionChar && char.IsDigit(code[i])); //preserves number after repetition char
+            }
+            return newCode;
         }
     }
 }

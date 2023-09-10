@@ -27,7 +27,7 @@ namespace BrainfuckPlus
                 }
                 paths = paths.Select(p => Path.Combine(tempDir, Path.GetFileName(p))).ToArray();
                 if (removeComments || removeDebug)
-                    Utils.FilterCode(paths, removeDebug, removeComments);
+                    Utils.FilterCode(paths, removeDebug, removeComments, true);
                 if (shortenMethodNames)
                     Modify.ShortenMethodNames(address, paths, false);
                 if (string.IsNullOrEmpty(outputName))

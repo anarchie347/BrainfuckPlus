@@ -35,7 +35,7 @@ namespace BrainfuckPlus
         public static void Filter(string address, bool removeDebug, bool removeComments)
         {
             string[] paths = Utils.GetReferencedFileAddresses(address);
-            Utils.FilterCode(paths, removeDebug, removeComments);
+            Utils.FilterCode(paths, removeDebug, removeComments, true);
             if (removeDebug)
                 Console.WriteLine("Debug charactes successfully removed");
             if (removeComments)

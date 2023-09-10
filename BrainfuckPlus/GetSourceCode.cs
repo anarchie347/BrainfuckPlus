@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -21,9 +22,9 @@ namespace BrainfuckPlus
             allowedCharSet += methodNames;
             if (debugMode) allowedCharSet += Syntax.DEBUG_CHARS;
 
-            code = RemoveCommentsAndNewLines(code);
-            code = RemoveInvalidChars(code, allowedCharSet);
-
+            code = Utils.RemoveComments(code);
+            code = Utils.RemoveInvalidChars(code, allowedCharSet, false);
+            
             return code;
         }
 
@@ -45,7 +46,10 @@ namespace BrainfuckPlus
             return fileFirstChars;
         }
 
-        public static string RemoveCommentsAndNewLines(string code)
+
+
+        
+        /*public static string RemoveCommentsAndNewLinesOLD(string code)
         {
             string[] lines = code.Split(Environment.NewLine);
             string resultingCode = "";
@@ -54,24 +58,49 @@ namespace BrainfuckPlus
             {
                 lines[i] = lines[i].Trim();
                 index = lines[i].IndexOf(Syntax.COMMENT_CHAR);
+                if (index == -1)
+                {
+                    resultingCode += lines[i];
+                } else if (i > Syntax.BLOCK_COMMENT_END_STRING.Length - 2 && lines[i].Substring(i - Syntax.BLOCK_COMMENT_END_STRING.Length + 1) == Syntax.BLOCK_COMMENT_END_STRING)
+                {
+                    //end comment char, so leave in
+                    //ARGH THIS NEEDS TO BE IN A LOOP COS MULTIPLE bLOCK COMMENTS PER LINE
+
+                    //REWRITE THIS AND REMOVEBLOCKCOMMENTS FROM SCRATCH
+                }
+                    
                 resultingCode += (index == -1 ? lines[i] : lines[i][..index]);
             }
+            resultingCode = RemoveBlockComments(resultingCode);
             return resultingCode;
-        }
+            
+        }*/
+
+        /*public static string RemoveBlockCommentsOLD(string code)
+        {
+            int startOfBlockComment = 0;
+            int endOfBlockComment;
+            StringBuilder newCode = new(code);
+            while ((startOfBlockComment = code.IndexOf(Syntax.BLOCK_COMMENT_START_STRING, startOfBlockComment)) != -1)
+            {
+                if (code.Length > startOfBlockComment + Syntax.BLOCK_COMMENT_START_STRING.Length - 1)
+                {
+                    endOfBlockComment = code.IndexOf(Syntax.BLOCK_COMMENT_END_STRING, startOfBlockComment + Syntax.BLOCK_COMMENT_END_STRING.Length + 1);
+                    if (endOfBlockComment == -1)
+                        endOfBlockComment = code.Length - 1;
+                }
+                else
+                {
+                    endOfBlockComment = -1;
+
+                }
+                newCode.Remove(startOfBlockComment, endOfBlockComment - startOfBlockComment + 1);
+            }
+            return newCode.ToString();
+        }*/
 
         
-        public static string RemoveInvalidChars(string code, string allowedCharSet)
-        {
-            string newCode = "";
-            bool followingRepetitionChar = false;
-            for (int i = 0; i < code.Length; i++)
-            {
-                if (allowedCharSet.Contains(code[i]) || followingRepetitionChar && char.IsDigit(code[i]))
-                    newCode += code[i]; 
-                followingRepetitionChar = (code[i] == Syntax.REPETITION_CHAR) || (followingRepetitionChar && char.IsDigit(code[i])); //preserves number after repetition char
-            }
-            return newCode;
-        }
+        
     }
 
 }
