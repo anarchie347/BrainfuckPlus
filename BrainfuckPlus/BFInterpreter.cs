@@ -200,6 +200,7 @@ namespace BrainfuckPlus
                     case ':':
                         Console.ForegroundColor = ConsoleColor.Magenta;
                         //output cells in table
+                        Console.WriteLine("DEBUG: ");
                         int padWidth = Math.Max(3, Math.Max(currentMemoryPointerPosition.ToString().Length, Memory[currentMemoryPointerPosition].ToString().Length));
                         int maxSubtract = Math.Min(15, currentMemoryPointerPosition);
                         for (int i = - maxSubtract; i < 0; i++)
