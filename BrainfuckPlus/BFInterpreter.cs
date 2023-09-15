@@ -199,6 +199,21 @@ namespace BrainfuckPlus
                         break;
                     case ':':
                         Console.ForegroundColor = ConsoleColor.Magenta;
+                        //output cells in table
+                        int padWidth = Math.Max(3, Math.Max(currentMemoryPointerPosition.ToString().Length, Memory[currentMemoryPointerPosition].ToString().Length));
+                        int maxSubtract = Math.Min(15, currentMemoryPointerPosition);
+                        for (int i = - maxSubtract; i < 0; i++)
+                        {
+                            Console.Write((currentMemoryPointerPosition + i).ToString().PadLeft(padWidth) + "|");
+                        }
+                        Console.WriteLine((currentMemoryPointerPosition).ToString().PadLeft(padWidth));
+                        Console.WriteLine(new String('-', padWidth * (maxSubtract + 1) + maxSubtract));
+                        for (int i = - maxSubtract; i < 0; i++)
+                        {
+                            Console.Write(Memory[currentMemoryPointerPosition + i].ToString().PadLeft(padWidth) + "|");
+                        }
+                        Console.WriteLine(Memory[currentMemoryPointerPosition].ToString().PadLeft(padWidth));
+
                         Console.WriteLine($"DEBUG: Current pointer position = {currentMemoryPointerPosition}");
                         Console.ForegroundColor = ConsoleColor.White;
                         interpreterPosition++;
@@ -253,6 +268,8 @@ namespace BrainfuckPlus
             }
             return false;
         }
+
+
     }
 }
 
