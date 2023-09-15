@@ -214,13 +214,12 @@ namespace BrainfuckPlus
                             Console.Write(Memory[currentMemoryPointerPosition + i].ToString().PadLeft(padWidth) + "|");
                         }
                         Console.WriteLine(Memory[currentMemoryPointerPosition].ToString().PadLeft(padWidth));
-
-                        Console.WriteLine($"DEBUG: Current pointer position = {currentMemoryPointerPosition}");
                         Console.ForegroundColor = ConsoleColor.White;
                         interpreterPosition++;
                         break;       
                     case '?':
                         Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.WriteLine($"DEBUG: Current pointer position = {currentMemoryPointerPosition}");
                         Console.WriteLine($"DEBUG: Current cell value = {Memory[currentMemoryPointerPosition]}");
                         Console.ForegroundColor = ConsoleColor.White;
                         interpreterPosition++;
