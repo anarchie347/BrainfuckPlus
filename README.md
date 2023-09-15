@@ -85,9 +85,9 @@ Some characters (currently \:?"|) can be used to output information about the cu
 
 \ - waits for the enter key to be pressed (similar to Console.ReadLine())
 
-: - outputs the current position of the pointer
+: - outputs the current cell and the previous (up to) 14 in a table format
 
-? - outputs the integer value stored in the current cell (not translated using ascii)
+? - outputs the current memory pointer position, as well as the value in memory (not translated through ASCII)
 
 " - waits 0.1s
 
@@ -100,6 +100,8 @@ All outputs from debug characters is outputted in magenta text and starts with *
 Comments in brainfuck are very easy unless you want to incude of `+-<>.,[]` in your comment
 
 BrainfuckPlus has a dedicated comment character `/` indicating that everything after it on that line should be ignored
+
+Block comments can be declared with `/*` and `*/`
 
 The comments character is not needed, youcan still add comments just by typing them regularly, but `/` allows you to use code characters after them.
 
