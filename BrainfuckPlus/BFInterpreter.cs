@@ -33,8 +33,10 @@ namespace BrainfuckPlus
             //Console.ForegroundColor = ConsoleColor.Green;
             //Console.WriteLine(Memory.Length);
             //Console.WriteLine("OK");
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+            Stopwatch totalRuntime = new Stopwatch();
+            Stopwatch runtimeNoInput = new Stopwatch();
+            totalRuntime.Start();
+            runtimeNoInput.Start();
             while (interpreterPosition < code.Length)
             {
 
@@ -92,7 +94,9 @@ namespace BrainfuckPlus
                         try
                         {
                             //brainfuck uses 10 as newline. different OSs use different for newline
+                            runtimeNoInput.Stop();
                             keyInputKeyInfo = Console.ReadKey();
+                            runtimeNoInput.Start();
                             if (keyInputKeyInfo.Key == ConsoleKey.Enter)
                                 keyInput = '\u000A';
                             else
@@ -254,8 +258,11 @@ namespace BrainfuckPlus
                 //Console.ReadKey(true);  //step by step debugging
                 //Thread.Sleep(5);
             }
-            sw.Stop();
-            Console.WriteLine($"\nExecution complete. Took {sw.ElapsedMilliseconds}ms");
+            totalRuntime.Stop();
+            runtimeNoInput.Stop();
+            Console.WriteLine("\nExecution complete");
+            Console.WriteLine($"Total execution time: {totalRuntime.ElapsedMilliseconds}ms");
+            Console.WriteLine($"Execution time without input waiting: {runtimeNoInput.ElapsedMilliseconds}ms");
 
         }
 
