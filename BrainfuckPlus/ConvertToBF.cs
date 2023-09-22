@@ -128,7 +128,7 @@ namespace BrainfuckPlus
             if (address == null) return code.Remove(charIndex,1);
             codeToInsert = GetSourceCode.GetCode(address, debugMode, out string v);
             codeToInsert = ExpandRepetitions(codeToInsert);
-            if (injections != null) codeToInsert = Inject(codeToInsert, injections);
+            codeToInsert = Inject(codeToInsert, injections ?? new List<string>());
 
 
             codeToInsert = RecursiveFindSubstitutions(codeToInsert, methodNames, directory, debugMode);
