@@ -48,6 +48,7 @@ namespace BrainfuckPlus
                     }
 
                     if (code.Length > j)
+                    {
                         if (repetitionCounter == string.Empty)
                             throw new Exception("Oh no, there was no number for the shorthand repetition because it was not a number");
                         else if (code[j] == Syntax.REPETITION_CHAR)
@@ -76,8 +77,29 @@ namespace BrainfuckPlus
                             j = endBlockIndex;
                             newCode.Append(sb);
                         }
+                        else if (Utils.CheckChar(code, j + 1, Syntax.CODE_INJECTION_START_CHAR))
+                        {
+                            //method call has injections
+                            int lastbracket = j;
+                            do
+                            {
+                                lastbracket++;
+                                lastbracket = code.IndexOf(Syntax.CODE_INJECTION_END_CHAR, lastbracket);
+                            } while (Utils.CheckChar(code, lastbracket + 1, Syntax.CODE_INJECTION_START_CHAR));
+                            string codeWithInjections = code.Substring(j, Utils.GetInclusiveLengthBetweenIndexes(j, lastbracket));
+                            StringBuilder sb = new();
+                            for (int k = 0; k < int.Parse(repetitionCounter); k++)
+                            {
+                                sb.Append(codeWithInjections);
+                            }
+                            newCode.Append(sb);
+                        }
                         else
+                        {
                             newCode.Append(new string(code[j], int.Parse(repetitionCounter)));
+                        }
+                        
+                    }
 
                     else if (repetitionCounter == string.Empty)
                         throw new Exception("Oh no, there was no number for the shorthand repetition because the end of the string was reached");
