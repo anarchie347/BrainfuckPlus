@@ -75,7 +75,7 @@ namespace BrainfuckPlus
                                 sb.Append(repeatingBlock);
                             }
                             j = endBlockIndex;
-                            newCode.Append(sb);
+                            newCode.Append(ExpandRepetitions(sb.ToString())); //expand nested repetitions
                         }
                         else if (Utils.CheckChar(code, j + 1, Syntax.CODE_INJECTION_START_CHAR))
                         {
@@ -92,7 +92,7 @@ namespace BrainfuckPlus
                             {
                                 sb.Append(codeWithInjections);
                             }
-                            newCode.Append(sb);
+                            newCode.Append(ExpandRepetitions(sb.ToString())); //expand nested repetitions
                         }
                         else
                         {
