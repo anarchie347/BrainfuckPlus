@@ -44,7 +44,7 @@ namespace BrainfuckPlus
                 if (string.IsNullOrEmpty(options.OutputPath))
                     outputPath = options.FileAddress;
                 else if (Path.IsPathRooted(options.OutputPath))
-                    outputPath = options.FileAddress;
+                    outputPath = options.OutputPath;
                 else
                     outputPath = Path.Combine(Path.GetDirectoryName(options.FileAddress), options.OutputPath);
 
