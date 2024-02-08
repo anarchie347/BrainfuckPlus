@@ -67,7 +67,7 @@ namespace BrainfuckPlus
             Random r = new();
             for (int i = code.Length - 1; i > 0; i--)
             {
-                if (r.Next(0, 1) == 0)
+                if (r.Next(0, 26) == 0)
                     code = code.Insert(i, "\n");
             }
             return code;
