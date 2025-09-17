@@ -3,6 +3,27 @@
 ###############################################################################
 * text=auto
 
+# Ensure consistent line endings for specific file types
+*.cs     text diff=csharp
+*.csproj text
+*.sln    text eol=crlf
+*.config text
+*.xml    text
+*.xaml   text
+*.json   text
+*.yml    text
+*.yaml   text
+*.md     text
+*.txt    text
+
+# Scripts should always use LF (important for bash on Linux)
+*.sh     text eol=lf
+*.bash   text eol=lf
+
+# Batch files should always use CRLF
+*.bat    text eol=crlf
+*.cmd    text eol=crlf
+
 ###############################################################################
 # Set default behavior for command prompt diff.
 #
